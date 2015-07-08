@@ -1,4 +1,4 @@
-## Roles and Actions## 
+## Roles and Actions ## 
 * Admin
   Actions -
 * Organizer
@@ -11,6 +11,8 @@
 ## Postman Link ##
 
 
+
+## Rearrange in above categories ##
 1)While create new Event, Event catagories and event_types cannot add to the event table--query problem
 
 2)user Login/Logout-- Ajax-Error
