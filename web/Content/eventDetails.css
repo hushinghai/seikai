@@ -1,0 +1,215 @@
+﻿#subheader {
+    border-bottom: 1px dotted  ;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+}
+#subheader_table {
+    width: 960px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+#subheader_info_cell {
+    vertical-align: bottom;
+}
+
+#subheader_logo_cell {
+    width: 300px;
+    text-align: center;
+}
+
+.panel_head2, .panel_footer {
+	background-color: ;
+	border-color: ;
+	color:  ;
+}
+.panel_body, .ticket_row, .passwd_info, .panel_628_share, .panel_footer, .panel_section {
+	background-color: ;
+	border-color:  ;
+	color: ;
+}
+.panel_body a {
+	color: ;
+}
+.panel_border {
+    border-color: ;
+}
+.ticket_container {
+	border-color: ;
+	border: 1px solid ;
+}
+.ticket_table_head, .ticket_table_head td {
+	color: ;
+	background-color: ;
+}
+.ticket_table td {
+    border-top: 1px solid ;
+}
+.ticket_table .offer_row td {
+    border-top: none;
+}
+.unit_row td {
+	padding-top:0px;
+	padding-bottom:12px;
+	padding-right:5px;
+	padding-left:20px;
+	border-top: none;
+}
+.unit_row_v2 td {
+	padding-top:0px;
+	padding-bottom:0px;
+	padding-right:5px;
+	padding-left:5px;
+	border-top: none;
+}
+.passwd_info {
+	background-color: ;
+	border: 1px solid ;
+}
+
+#processing ul li {
+	border-color: ;
+}
+
+#processing ul li.active {
+	background-color: ;
+}
+
+#regprocess {
+	border-color: ;
+}
+
+#regprocess ul li, #regprocess ul li.first {
+	color: ;
+	background-color: ;
+	border-color: ;
+}
+
+#regprocess ul li.active {
+	color: ;
+	background-color: ;
+}
+
+.panel_edit {
+	width: 400px;
+	color:  ;
+	background-color: ;
+	border-color: ;
+	border-style: solid;
+	border-width: 1px;
+	padding:8px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#event_header h1 {
+    margin-top: 8px;
+}
+
+#event_header h2 {
+	font-size: 17px;
+	text-align : left;
+    line-height: 21px;
+	color: ;
+	margin: 0;
+	padding: 0;
+	font-weight: 300;
+	}
+
+#event_header h2 > a {
+	color: ;
+}
+
+#event_network h2  {
+	margin  : 0;
+	padding :0 ;
+    line-height: 21px;
+	}
+
+.panel_head2 h3 {
+	font-size:16px;
+	line-height:22px;
+	font-weight: 500;
+	color: ;
+	padding: 0;
+}
+
+.panel_body h2 {
+	font-size:16px;
+	line-height:1.2em;
+	font-weight:bold;
+	color: ;
+	margin : 2px 0 0;
+	padding: 0;
+	}
+
+#panel_address h2 {
+	font-size:1.0em;
+	line-height:normal;
+	font-weight:normal;
+	color: ;
+	margin : 0;
+	padding: 0 0 8px;
+	text-align : left;
+	}
+
+#panel_when h2 {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size:1.0em;
+	line-height:normal;
+	font-weight:normal;
+	color: ;
+	margin : 0;
+	padding: 0;
+	text-align : left;
+	}
+
+#RSVPBody {
+	background-color: ;
+	border: 1px solid ;
+	color:  ;
+}
+.RSVPMessage {
+    display: block;
+    margin: 24px 0 10px;
+}
+.rsvp_responded_thanks {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.rsvp_responded_msg {
+    margin-top: 13px;
+}
+
+/* social sharing module on /orderconfirmation */
+.panel_628_share {
+    border: 1px solid ;
+}
+#optouts_div {
+    border-left: 1px dotted ;
+}
+/* end social sharing module on /orderconfirmation */
+.registrationTable h3 {
+    border-bottom: 1px solid ;
+}
+
+/* event tracking button */
+#track_event_container {
+    background-color: #fff;
+}
+
+
+.js-advanced-team-landing .pod,
+.advanced-team-navigation .js-advanced-team-landing .pod:hover {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+a:hover .advanced-team-landing__primary-text {
+    opacity: 0.66;
+}
+.advanced-team-landing__primary-text {
+    color:  ;
+}
+

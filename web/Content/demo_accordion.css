@@ -1,0 +1,125 @@
+﻿.tickets
+{
+padding:5px 5px 5px 5px;
+
+}
+	
+#addedTickets
+{
+width: 74%;
+border: 2px solid rgba(128, 128, 128, 0.26);
+padding: 5px 5px 5px 5px;
+margin: 10px 10px 10px 175px;
+  
+}
+.ticketSettings
+{
+padding: 15px 10px 25px 173px;
+border-bottom: 1px solid #dedede;
+background-color: #fafafa;
+width: 74%;
+margin: 0px 0px 0px 7px;
+padding-left: 0;
+margin-left: 175px;
+font-family: sans-serif;
+font-size: medium;
+margin-left: inherit;
+margin-top: 30px;
+
+}
+.g-group
+{
+ padding: 7px 17px 5px 1px;;
+}
+
+.g-cell
+{
+padding: 0px 5px 5px 20px;
+width:100% !important;
+}
+
+#ticketDesctextArea
+{
+box-sizing: border-box;
+border-radius: 3px;
+vertical-align: middle;
+width: 100%;
+padding: 9px 12px;
+border: 1px #dedede solid;
+background: #fff;
+color: #666;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400;
+}
+
+.ticketfees
+{
+width: 100%;
+cursor: pointer;
+position: relative;
+
+height: 44px;
+display: block;
+font-size: 17px;
+background: #fff;
+overflow: hidden;
+display: block;
+zoom: 1;
+border: 1px solid transparent;
+-webkit-appearance: menulist-button;
+border-color: rgba(128, 128, 128, 0.3);
+}
+
+#ticketsContents, #paidticketsContents
+{
+border: 1px solid rgba(128, 128, 128, 0.15);
+width: 100%;
+padding: 10px 0px 21px 12px;
+margin: 12px 5px 12px 0px;
+background-color: whitesmoke;
+padding-top:22px;
+padding-left:22px;
+}
+
+#ticketsContents>input, #paidticketsContents>input
+{
+width: 14%;
+height: 43px;
+vertical-align: baseline;
+}
+
+
+
+input
+{
+border: 1px solid rgba(128, 128, 128, 0.25);
+padding: 10px 10px 10px 20px;
+margin-right: 25px;
+
+}
+
+.ticketsPara
+{
+    margin: 0 0px 15px 8px;
+}
+
+
+.tickets
+{
+padding: 0px 18px 3px 5px !important;
+margin-right: 25px;
+font-size: 16px !important;
+line-height: 35px !important;
+color: #404040 !important;
+font-weight: 400 !important;
+width:16% !important;
+margin-top:1%;
+}
+.removeTicket, .settings
+{
+ float:right !important;
+margin-top:0;
+}
+
+body{position:relative;z-index:0;}.main:before{width:100%;height:100%;position:absolute;top:0px;left:0px;z-index:-1;content:'';background:-webkit-radial-gradient(30%,rgba(255,255,255,0.15),rgba(0,0,0,0)),url('img/body-bg.png');background:-moz-radial-gradient(30%,rgba(255,255,255,0.15),rgba(0,0,0,0)),url('img/body-bg.png');background:-o-radial-gradient(30%,rgba(255,255,255,0.15),rgba(0,0,0,0)),url('img/body-bg.png');background:radial-gradient(30%,rgba(255,255,255,0.15),rgba(0,0,0,0)),url('img/body-bg.png');}.site-header-wrap{margin-bottom:60px;border-bottom:1px solid #cd9ad6;}.accordion,.accordion *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}.accordion{overflow:hidden;box-shadow:0px 1px 3px rgba(0,0,0,0.25);border-radius:3px;background:#f7f7f7;}.accordion-section-title{width:100%;padding:15px;display:inline-block;border-bottom:1px solid #1a1a1a;background:#333;transition:all linear 0.15s;font-size:1.200em;text-shadow:0px 1px 0px #1a1a1a;color:#fff;}.accordion-section-title.active,.accordion-section-title:hover{background:#4c4c4c;text-decoration:none;}.accordion-section:last-child .accordion-section-title{border-bottom:none;}.accordion-section-content{padding:15px;display:none;}
