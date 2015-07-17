@@ -48,10 +48,18 @@ class ApiController extends BaseController {
 	public function postEvents()
 	{
 		$input = Input::all();
+	 
 		$error_flag = 0;
-		if(!$input['city']) { // Bitch!
-			$error = "City not present";
-			$error_flag = 1;
+		if($input['city']== null && $input['lat']== null && $input['lng']== null ) { 
+			$searchterm = $input['search'];
+					 
+						if( $searchterm == null) {
+			$events = EventB::where('end_date', '>=', date('Y-m-d H:i:s',time()-(24*60*60)))->where('status',0);
+		}else
+		{
+			$events = EventB::where('name', 'like', "%$searchterm%")->where('end_date', '>=', date('Y-m-d H:i:s',time()-(24*60*60)))->where('status',0);
+		}
+			 
 		} else {
 			try{
 				if(Input::has('lat') && Input::has('lng')) {
@@ -61,20 +69,19 @@ class ApiController extends BaseController {
 				    $max_lat=self::getLat($lat,0);
 				    $min_lng=self::getLong($lng,$lat,270);
 				    $max_lng=self::getLong($lng,$lat,90);
-					$events = EventB::where('lat','<=',$max_lat)->where('lat','>=',$min_lat)->where('lng','>=',$min_lng)->where('lat','<=',$max_lat)->where('status',0);
+					$events = EventB::where('lat','<=',$max_lat)->where('lat','>=',$min_lat)->where('lng','>=',$min_lng)->where('lat','<=',$max_lat)->where('end_date', '>=', date('Y-m-d H:i:s',time()-(24*60*60)))->where('status',0);
 				} else  {
-					$events = EventB::where('city',$input['city'])->where('status',0);
+					$events = EventB::where('end_date', '>=', date('Y-m-d H:i:s',time()-(24*60*60)))->where('city',$input['city'])->where('status',0);
 				}
 				if(Input::has('search')){
 					$searchterm = $input['search'];
-					if($events->first()){
+					 
 						if( $searchterm != null) {
-							$events = $events->where('name', 'like', "%$searchterm%");
+							 
+							$events = EventB::where('city',$input['city'])->where('end_date', '>=', date('Y-m-d H:i:s',time()-(24*60*60)))->where('name', 'like', "%$searchterm%");
 						}
-						if($input['user_id']) {
-							$events = User::check_users_going_to_event($events,$input['user_id']);
-						}
-					}
+						 
+				 
 				}
 			}
 			catch(Exception $e) {
@@ -82,13 +89,16 @@ class ApiController extends BaseController {
 				$error = "Invalid inputs. ".$e;
 			}
 		}
+		 
+	 
 		if($error_flag == 1) {
 			return array('success' => '0','error' => 1 , 'error_msg' => $error);
 		} else {
-			return $events->get();
-			// return EventB::create_event_list_obj($events->get());
-		}
-	}
+			 
+ 
+        return $events->get();
+			//return EventB::create_event_list_obj($events->get());
+		}	}
 
 	public function postSaveuserevent() {
 
@@ -512,21 +522,23 @@ class ApiController extends BaseController {
 		 $vars['password'] = Hash::make(Input::get('password'));
 		 $vars['email'] = Input::get('email');
 
+	
 		 $user = User::where('email','=',Input::get('email'))->first();
 		 if( $user == null ) {
 		 	$user = User::create($vars);
 
 			return array('success' => '1', 'user_id' => $user->id, 'email' => $user->email);
 		 } else {
-		 	return array('success' => '0','error' => '1', "message" => 'email already registered');
+		 	return array('success' => '0','error' => '1', "message" => 'Email already registered ');
 		 }
 		 
 	}
 
 
 	public function getCategories() {
-			$cat = EventCategory::lists('name', 'id');
-
+		
+			$cat = EventCategory::lists('name', 'id', 'image_url');
+			
 			return $cat;
 	}
 
@@ -665,6 +677,8 @@ class ApiController extends BaseController {
 
         $input = Input::all();
 
+        
+
 
 		$image = Input::file('image');
 
@@ -692,8 +706,12 @@ class ApiController extends BaseController {
 
         $vars['venue'] = $input['venue'];
 
+        $timestamp_start = strtotime($input['start_date']);
+        $vars['start_date'] = date("Y-m-d H:i:s", $timestamp_start);
         $vars['start_time'] = $input['start_time'];
 
+        $timestamp_end = strtotime($input['end_date']);
+        $vars['end_date'] = date("Y-m-d H:i:s", $timestamp_end);
         $vars['end_time'] = $input['end_time'];
 
         $vars['image_url'] = $fullname;
@@ -702,7 +720,9 @@ class ApiController extends BaseController {
 
         $vars['event_type'] = $input['eventtype'];
 
-        $vars['user_created'] =$input['user_id'];
+        $vars['user_created'] = $input['user_id'];
+
+        
 
         $event = EventB::create($vars);
 
@@ -712,12 +732,266 @@ class ApiController extends BaseController {
 
 	}
 
-	public function postAllcategory()
+	public function getAllcategory()
 	{
-		$eventcat = EventCategory::get();
+		 
 		
+		$eventcat = EventCategory::get();
+		 
 		return $eventcat;
 	}
 
+	public function getAlleventtypes()
+	{
+		 
+	 
+		$event_type = EventType::get();
+		 
+		return $event_type;
+	}
+
+
+	public function postEditevent()
+	{
+		$input = Input::all();
+
+		if($input['event_id'] == null){
+
+			return array('success' => '0','error' => 1 , 'error_msg' => "Event id not given");
+
+		}else
+		{
+			$image = Input::file('image');
+
+
+		if($image) {
+
+	        $filename = $image->getClientOriginalName();
+
+	        $filename = pathinfo($filename, PATHINFO_FILENAME);
+
+	        $fullname = Str::slug(Str::random(8) . $filename) . '.' .$image->getClientOriginalExtension();
+
+	        $upload = $image->move('uploads/event_logos', $fullname);
+
+		 } else {
+		 	$fullname = "";
+		 }
+
+		$vars['name'] = $input['name'];
+
+        $vars['description'] = $input['description'];
+
+
+        $vars['venue'] = $input['venue'];
+
+       
+
+        $vars['image_url'] = $fullname;
+
+        $vars['category'] = $input['eventcat'];
+
+        $vars['event_type'] = $input['eventtype'];
+
+        $vars['user_created'] = $input['user_id'];
+ 
+
+ 
+   
+ $check = EventB::where('id',$input['event_id'])->where('user_created',$input['user_id']); 
+
+ Log::info($check->first());
+if( $check->first() !== NULL ) {
+$events= EventB::where('id',$input['event_id'])->update($vars);
+return array('success' => '1','error' => 0 , 'error_msg' => "Event Updated");
+}else
+{
+return array('success' => '0','error' => 1 , 'error_msg' => "Event not found");
+}
+      
+    	}
+	}
+		 
+			
+		
+
+  public function postAddticketevent()
+	{
+		$input = Input::all();
+
+		 
+		$vars['event_id'] = $input['event_id'];
+
+        $vars['type'] = $input['type'];
+
+if($input['type'] == 0){
+	            $vars['price'] = 0;
+        $vars['total_price'] = 0;	
+        
+    }else
+    {
+$vars['price'] = $input['price'];
+        $vars['total_price'] = $input['price'];
+    }
+
+        $vars['title'] = $input['title'];
+
+        $vars['noseats'] = $input['no_seats'];
+
+
+ $check = EventB::where('id',$input['event_id'])->where('user_created',$input['user_id']); 
+
+ Log::info($check->first());
+if( $check->first() !== NULL ) {
+//$events= EventB::where('id',$input['event_id'])->update($vars);
+	$event = TicketType::create($vars);
+return array('success' => '1','error' => 0 , 'success_msg' => "Ticket Created");
+}else
+{
+return array('success' => '0','error' => 1 , 'error_msg' => "Not authorized user for this event");
+}
+      
+    	
+	}   
+
+
+
+	public function postBookticket()
+{
+	$input = Input::all();
+  
+if( $input['quantity'] != 0 ) {
+$check_events = EventB::where('id',$input['event_id'])->where('end_date', '>=', date('Y-m-d H:i:s',time()-(24*60*60)))->where('status',0);
+if( $check_events->first() !== NULL ) {
+
+$check_ticket_count = TicketType::where('id',$input['ticket_type_id'])->where('event_id',$input['event_id'])->first();
+$count=$check_ticket_count ->noseats;
+$per_ticket_amt=$check_ticket_count ->price;
+$ticket_type=$check_ticket_count ->type;
+ 
+if($count > 0){
+			$vars['first_name'] = $input['first_name'];
+		    $vars['last_name'] = $input['last_name'];
+		    $vars['address'] = $input['address'];
+			$vars['email'] = $input['email_id'];
+			$vars['contact_no'] = $input['mobile_no'];
+		if( $ticket_type == 0 ) {//********** Free ticket********//
+	        
+			$vars['transaction_id'] = "";
+		    $vars['amount'] = 0;
+			$vars['status'] = 1;
+
+			$vars['currency'] = "USD";
+			$vars['type'] = "Free";
+			$vars['event_id']=$input['event_id'];
+			$vars['user_id']=$input['user_id'];
+			
+		 	$ticket=$input['quantity'];
+		 	if($ticket <= $count ){
+
+		 		$vars['booking_id'] = Str::random(10);
+		 		 
+		 		$free_ticket=Transaction::create($vars);
+
+		 			$ticket_print['transaction_id']=$free_ticket->id;
+		 			 
+
+		 			$ticket_print['event_id']=$input['event_id'];
+		 			$ticket_print['user_id']=$input['user_id'];
+		 			$ticket_print['tickettype_id']=$input['ticket_type_id'];
+		 			
+		 	 
+		 		for($i=0;$i<$ticket;$i++){
+		 			
+		 
+		 			$ticket_recipt=Ticket::create($ticket_print);
+
+		 		}
+		 		$ticket_count=$count-$ticket;
+		 		$no_of_seats['noseats']=$ticket_count;
+		 		$update_ticket_count=TicketType::where('id',$input['ticket_type_id'])->where('event_id',$input['event_id'])->update($no_of_seats);
+
+		 		 return array('success' => '1','error' => 0 ,'Booking id' => $vars['booking_id']);
+		 	}
+		 	else
+		 		{
+		 			return array('success' => '0','error' => '1' , 'error_msg' => "Only ".$count." tickets available");
+		 		}			 
+			 
+
+		
+		}else//********** Paid ticket********//
+	        
+		{
+
+			$ticket=$input['quantity'];
+			$total_amount=$per_ticket_amt*$ticket;
+			$vars['transaction_id'] = $input['transaction_id'];
+		    $vars['amount'] = $total_amount;
+			$vars['status'] = 1; 
+
+			$vars['currency'] = "USD";
+			$vars['type'] = "Paid";
+			$vars['event_id']=$input['event_id'];
+			$vars['user_id']=$input['user_id'];
+			if($ticket <= $count ){
+
+		 		$vars['booking_id'] = Str::random(10);
+		 		 
+		 		$free_ticket=Transaction::create($vars);
+
+		 			$ticket_print['transaction_id']=$free_ticket->id;
+		 			 
+
+		 			$ticket_print['event_id']=$input['event_id'];
+		 			$ticket_print['user_id']=$input['user_id'];
+		 			$ticket_print['tickettype_id']=$input['ticket_type_id'];
+		 			
+		 	 
+		 		for($i=0;$i<$ticket;$i++){
+		 			
+		 
+		 			$ticket_recipt=Ticket::create($ticket_print);
+
+		 		}
+		 		$ticket_count=$count-$ticket;
+		 		$no_of_seats['noseats']=$ticket_count;
+		 		$update_ticket_count=TicketType::where('id',$input['ticket_type_id'])->where('event_id',$input['event_id'])->update($no_of_seats);
+
+		 		 return array('success' => '1','error' => 0 ,'Booking id' => $vars['booking_id']);
+		 	}
+		 	else
+		 		{
+		 			return array('success' => '0','error' => '1' , 'error_msg' => "Only ".$count." tickets available");
+		 		}			 
+			 
+
+			
+		 	
+        
+ 
+		}
+}else
+	{
+return array('success' => '0','error' => '1' , 'error_msg' => "No Tickets Available");
+	}	
+}
+	else{
+	return array('success' => '0','error' => 0 , 'Result' => "Event End");	
+	}
+	}	else
+	{
+		return array('success' => '0','error' => '1' , 'error_msg' => "Quantity must be greater by zero");
+	}
+}
+
+ 
+ 
+    
+		 
+	
+
+ 
+ 
 
 }

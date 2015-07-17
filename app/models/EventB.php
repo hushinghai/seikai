@@ -4,7 +4,7 @@ class EventB extends Eloquent {
 
 	 protected $table = 'events';
 
-	protected $fillable = array('name', 'description','city','image_url','category','event_type','user_created','lat','lng','venue','start_date','start_time','end_date','end_time','payment_fees','booking_fees_base','booking_fees');
+	protected $fillable = array('name', 'description', 'city', 'image_url', 'category', 'event_type', 'user_created', 'lat', 'lng', 'venue', 'start_date', 'start_time', 'end_date', 'end_time', 'payment_fees', 'booking_fees_base', 'booking_fees');
 
 
 	public function scopeUsersGoingToEvent($query) {

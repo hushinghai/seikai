@@ -97,7 +97,13 @@ Route::controller('/installer','InstallerController');
 
 Route::group(array('before' => array('installed')), function(){
 
+	 
 	Route::controller('api','ApiController');
+
+	
+
+
+ 
 
 	Route::controller('events','EventsController');
 

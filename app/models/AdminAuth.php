@@ -7,15 +7,16 @@ class AdminAuth {
 
 		public static function attempt($credentials){
 		
-		
 		$username = $credentials['username'];
 		$password = $credentials['password'];
 		
 		
 		$admin = Admin::where("username","=","$username")->first();
 		
-	
+	 
 		if($admin){
+			
+
 		
 		if(Hash::check($password, $admin->password)){
 		
@@ -31,6 +32,9 @@ class AdminAuth {
 		
 			}
 			else{
+
+		 
+			
 			
 			return FALSE;
 			
@@ -38,7 +42,7 @@ class AdminAuth {
 			
 		}
 		else{
-		
+		;
 			return FALSE;
 			
 			}

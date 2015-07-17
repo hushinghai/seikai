@@ -11,7 +11,10 @@ class TicketController extends BaseController {
 		
 		
 		$input = Input::all();
+		 
+		
 		$buying = unserialize(Session::get('buying'));
+
 		if($input['st']) {
 
 			try {
@@ -108,6 +111,7 @@ class TicketController extends BaseController {
 		if(Auth::user()){
 			return Redirect::to('user/mytickets');
 		}
+
 		else{
 				
 			Session::flash('ticket_registered', 'true');
@@ -126,14 +130,14 @@ class TicketController extends BaseController {
 
 	public function postBuytickets(){
 		
-		
-		$arr = Input::all();
-		
-		
+		dd("raja");
+		/*$arr = Input::all();
+
 		Session::put('buying', serialize($arr));
+
 		
 		
-		return Response::json($arr);
+		return Response::json($arr);*/
 		
 		
 		

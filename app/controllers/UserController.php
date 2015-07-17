@@ -214,6 +214,7 @@ class UserController extends BaseController {
 
         $input = Input::all();
 
+
 		$image = Input::file('file');
 
 		 if($image) {
@@ -251,9 +252,9 @@ class UserController extends BaseController {
 
         $vars['image_url'] = $fullname;
 
-        //$vars['category'] = $input['eventcat'];
+        $vars['category'] = $input['eventcat'];
 
-       // $vars['event_type'] = $input['event_type'];
+        $vars['event_type'] = $input['eventtype'];
 
         $vars['user_created'] =Auth::user()->id;
 
