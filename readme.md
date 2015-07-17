@@ -10,23 +10,27 @@
   
   
 ### OrganizerActions ###
-   
-   * Event Reschedule by Orangiser 
+
+   * Create the event
+   * Event edit by who created the event
+   * organisers Details edit and add
    * Ticket registered user want update mail regarding reschedule 
   
    
 ### Participant Actions ### 
-   * In user login contact the Organizer
+
    * Book the ticket free/paid
-   * Cancel the booked Ticket free/paid required
+   * Save the Event
+   * serach the event
 
 ## Known Issues ##
- 
-* Facebook login required
-* Mail Mandrill ApI required
-* Forgot Password email doesn't work
-* Ticket should purchased before the start Time of the event,it won't allow after that the particular time.
-* After Payment page redirect required
+   
+   * Ticket cancellation 
+   * Facebook login 
+   * Contact to organisers
+   * Forgot Password doesn't work
+   * Ticket should purchased before the start Time of the event,it won't allow after that the particular time.
+
 
 
 ## Postman Link ## 
