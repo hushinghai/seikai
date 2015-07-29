@@ -596,7 +596,7 @@ class UserController extends BaseController {
 
 		$user_id = Auth::user()->id;
 
-		$transactions = Transaction::where('user_id',$user_id)->get();
+		$transactions = Transaction::where('user_id',$user_id)->where('is_cancelled',0)->get();
 
 		$past = array();
 		$upcoming = array();

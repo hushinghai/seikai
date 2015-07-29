@@ -852,9 +852,84 @@ return array('success' => '0','error' => 1 , 'error_msg' => "Not authorized user
 }
       
     	
-	}   
+	}
+
+public function postEventdelete()
+{
+	$eventid = Input::get('event_id');
+	$userid = Input::get('user_id');
+	$events=EventB::find($eventid);
+	//$users=User::find($userid);
+	if($events!=NULL)
+	{	
+	$event_usrid=$events->user_created;
+	if($event_usrid==$userid)
+	{
+		$events->delete();
+		$response_array = array('success' => true);
+		$response_code = 200;
+		return Response::json($response_array, $response_code);
+	}else {
+		$response_array = array('success'=>false, 'error_messages'=>'No access to delete the event');
+		$response_code = 200;
+		return Response::json($response_array, $response_code);
+	}
+	}
+	else
+	{
+		$response_array = array('success'=>false, 'error_messages'=>'No event created');
+		$response_code = 200;
+		return Response::json($response_array, $response_code);
+	}
 
 
+
+ }
+
+public function postTicketcancel()
+{
+	$transaction_id= Input::get('transaction_id');
+	$transactions=Transaction::find($transaction_id);
+	$count_tkt=0;
+	if($transactions!=NULL and $transactions->is_cancelled==0)
+	{
+	$count_tkt=Ticket::where('transaction_id',$transaction_id)->count();
+	$ticket=Ticket::where('transaction_id',$transaction_id)->first();
+	$ticket_type=$ticket->tickettype_id;
+	$check_ticket_count = TicketType::where('id',$ticket_type)->first();
+	$per_ticket_amt=$check_ticket_count ->price;
+	$refund_amount=0;
+	$tkt_type=$check_ticket_count ->type;
+	//return $tkt_type;
+	if( $tkt_type == 0 ) {
+		
+			Ticket::where('transaction_id',$transaction_id)->delete();
+			$transactions->is_cancelled=1;
+			$transactions->save();
+			$response_array = array('success' => true,'refund amount'=>$refund_amount);
+			$response_code = 200;
+			return Response::json($response_array,$response_code);
+		}
+	else
+	{
+		 Ticket::where('transaction_id',$transaction_id)->delete();
+		 $transactions->is_cancelled=1;
+		 $transactions->save();
+		 $refund_amount=$per_ticket_amt*$count_tkt;
+		 $response_array = array('success' => true,'refund amount'=>$refund_amount);
+		 $response_code = 200;
+		 return Response::json($response_array,$response_code);
+	}
+   }else{
+   	     
+		 $response_array = array('success' => false,'error_message'=>'Not valid transaction or a already cancelled transaction');
+		 $response_code = 200;
+		 return Response::json($response_array,$response_code);  
+	 }
+
+
+
+}
 
 	public function postBookticket()
 {

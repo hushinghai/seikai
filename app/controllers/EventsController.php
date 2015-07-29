@@ -114,9 +114,52 @@ class EventsController extends BaseController {
 	public function getEventdetails($event_id) {
 
 		$vars['pageTitle'] = 'Event Details';
-
+        $flag=0;
+        $date = date('Y-m-d H:i:s',time());
 		$event = EventB::find($event_id);
+		$event_date=$event->start_date;
+		$crrdate = date('Y-m-d', strtotime($date));
+   		$crrtime = date('H:i:s', strtotime($date));
+   		$mv=substr($event->start_time,-2);
+   		$pos=strpos($event->start_time,':');
+   		$mv_pos=strpos($event->start_time,$mv);
+   		
+   		$hour=substr($event->start_time,0,$pos);
+    	$min=substr($event->start_time,$pos+1,($mv_pos-($pos+1)));
+    	if($mv == 'pm')
+    	 {
+      		$hour=$hour+12;
+      		if($hour==24)
+      		 {
+      			$hour=0;
+      		 }
+    	 }
+    	$start_time=$hour.":".$min.":00";
+    	$eventtime = date('H:i:s', strtotime($start_time));
+    	$datewant = new DateTime($eventtime);
+    	$event_time=$datewant->sub(new DateInterval('P0Y0M0DT2H0M0S'))->format('H:i:s');
+    	if($crrdate > $event_date)
+    	 {
+    	 	$flag=0;
+    	 }
+    	 elseif($crrdate==$event_date)
+    	  {
+    	 	if($crrtime > $event_time)
+    	     {	
+    			$flag=0;
+    	 	 }
+    	 	 else
+    	 	 { 
+    	 	// return "hello";
+    	 	   $flag=1;
+    	      }
+    	  }
+    	 else
+    	 {
+    	 	$flag=1;
+    	 }
 
+        //return $crrtime.":::".$crrdate."::::".$event_time."::::::".$event_date.":::::".$flag;
 		if($event != null) {
 
 			$event_obj= EventB::create_event_obj($event);
@@ -195,6 +238,8 @@ class EventsController extends BaseController {
 			$vars['tickettypes'] = $types;
 
 			$vars['event'] = $event_obj;
+
+			$vars['flag']=$flag;
 		}
 
 		return View::make('event.eventdetails',$vars);
@@ -244,6 +289,8 @@ class EventsController extends BaseController {
 			}else{
 				$nobj->type = "";
 			}
+
+
 
 			$nobj->location = $event->venue . " , " . $event->city;
 

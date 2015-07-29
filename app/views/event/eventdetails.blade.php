@@ -762,9 +762,15 @@ target="_top">
                 <tbody>
                   <tr>
                     <td>&nbsp;</td>
-
+                    @if(Auth::user())
+                    <?php if($flag==1)  {?>
                     <td><span class="button_css" id="primary_cta"><a class="js-checkout-button" id="registerFree" href="#" style=
-                    "text-decoration:none;color:#FFFFFF;">Register</a></span>
+                    "text-decoration:none;color:#FFFFFF;">Register</a>  <?php } else {?> 
+                    <td><span  ><a  href="#" style=
+                    "text-decoration:none; color:red ;">Registration Closed</a> <?php }?> 
+                    @endif      
+
+
                     </td>
                   </tr>
                 </tbody>

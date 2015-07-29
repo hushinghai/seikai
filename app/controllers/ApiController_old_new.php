@@ -1,6 +1,6 @@
 <?php
 
-class ApiController extends BaseController {
+class ApiController_old2 extends BaseController {
 
 
 	 protected static $restful = true;
