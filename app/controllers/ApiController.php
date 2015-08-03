@@ -986,7 +986,7 @@ if($count > 0){
 		 		$no_of_seats['noseats']=$ticket_count;
 		 		$update_ticket_count=TicketType::where('id',$input['ticket_type_id'])->where('event_id',$input['event_id'])->update($no_of_seats);
 
-		 		 return array('success' => '1','error' => 0 ,'Booking id' => $vars['booking_id']);
+		 		 return array('success' => '1','error' => 0 ,'Booking id' => $vars['booking_id'],'Transaction_id'=>$free_ticket->id);
 		 	}
 		 	else
 		 		{
@@ -1001,7 +1001,6 @@ if($count > 0){
 
 			$ticket=$input['quantity'];
 			$total_amount=$per_ticket_amt*$ticket;
-			$vars['transaction_id'] = $input['transaction_id'];
 		    $vars['amount'] = $total_amount;
 			$vars['status'] = 1; 
 
@@ -1033,7 +1032,7 @@ if($count > 0){
 		 		$no_of_seats['noseats']=$ticket_count;
 		 		$update_ticket_count=TicketType::where('id',$input['ticket_type_id'])->where('event_id',$input['event_id'])->update($no_of_seats);
 
-		 		 return array('success' => '1','error' => 0 ,'Booking id' => $vars['booking_id']);
+		 		 return array('success' => '1','error' => 0 ,'Booking id' => $vars['booking_id'],'Transaction_id'=>$free_ticket->id);
 		 	}
 		 	else
 		 		{

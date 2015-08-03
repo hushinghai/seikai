@@ -8,9 +8,12 @@ use \Facebook\FacebookRedirectLoginHelper as FacebookRedirectLoginHelper;
 use \Facebook\FacebookRequestException as FacebookRequestException;
 use \Facebook\FacebookRequest as FacebookRequest;
 
-FacebookSession::setDefaultApplication('753957394681286', 'af9a3c945d151740c9fe3e68f984030e');
+//FacebookSession::setDefaultApplication('753957394681286', 'af9a3c945d151740c9fe3e68f984030e');
 
 
+//FacebookSession::setDefaultApplication('919392211459412', 'ed0bc7c933dd1873b070a5c028875066');
+
+FacebookSession::setDefaultApplication('463479817162709', '5233f5d719a9cae57b75aed40334f3ab');
 
 
 Route::get('fbauth', function(){
@@ -32,6 +35,8 @@ Route::get('fbregister', function(){
 $helper = new FacebookRedirectLoginHelper(URL::to('/').'/fbregister');
 try {
   $session = $helper->getSessionFromRedirect();
+  //dd($session);
+
 } catch(FacebookRequestException $ex) {
   // When Facebook returns an error
 } catch(\Exception $ex) {
@@ -39,9 +44,11 @@ try {
 }
 if ($session) {
 
-	$request = new FacebookRequest($session, 'GET', '/me');
+	$request = new FacebookRequest($session, 'GET', '/me?fields=id,name,email');
 $response = $request->execute();
 $graphObject = $response->getGraphObject();
+
+//dd($graphObject);
 
 $create_user = true;
 
@@ -67,9 +74,18 @@ if(Auth::user()){
 }
 else{
 
-	$user = User::where('facebook_id',"=",$graphObject->getProperty('id'))->first();
+	//dd($graphObject);
+
+	$user = User::where('email',"=",$graphObject->getProperty('email'))->first();
+    
+	
 
 	if($user){ 
+		if($user->facebook_id==0)
+	     {
+		$user->facebook_id = $graphObject->getProperty('id');
+		$user->save();	
+	      }
 	Auth::login($user);
 	$create_user = false;
 	}

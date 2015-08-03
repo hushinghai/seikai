@@ -135,6 +135,7 @@ Route::group(array('before' => array('installed','auth')), function()
 
 if(isInstalled()){ 
 
+
 	Config::set('mail.host', s('email_host'));
 	Config::set('mail.port', s('email_port'));
 	Config::set('mail.username', s('email_username'));
@@ -173,8 +174,7 @@ if(Email::config_set())
 
 
 
-Event::listen('user.created', $email_user_verification);
-
+Event::listen('user.created',$email_user_verification);
 
 Event::listen('user.send_verification', $email_user_verification);
 
@@ -192,6 +192,60 @@ Event::listen('user.send_reset_password', function($user){
 	Email::send($user->email, s("email_subject_forgot_password"), $content);
 
 });
+
+Event::listen('user.createevent', function($user,$event){
+				
+				$content = Email::make(s("email_content_create_event"), array(
+				"[username]" => $user->email,
+				"[eventname]" => $event->name,
+				"[startdate]" => date("F j",strtotime($event->start_date)),
+				"[starttime]" => $event->start_time,
+				"[enddate]" => date("F j",strtotime($event->end_date)),
+				"[endtime]" => $event->end_time
+		));
+				
+
+	Email::send($user->email, s("email_subject_create_event"), $content);
+
+});
+
+Event::listen('user.cancelevent', function($user,$event){
+				
+				$content = Email::make(s("email_content_cancel_event"), array(
+				"[username]" => $user->email,
+				"[eventname]" => $event->name
+			));	
+
+	Email::send($user->email, s("email_subject_cancel_event"), $content);
+
+});
+
+Event::listen('user.cancelticket', function($user,$transactions){
+				
+				$content = Email::make(s("email_content_cancel_ticket"), array(
+				"[username]" => $user->email,
+				"[bookingid]" => $transactions->booking_id,
+				"[refundamount]" => $transactions->amount,
+				"[transactiontype]"=> $transactions->type
+			));	
+
+	Email::send($user->email, s("email_subject_cancel_ticket"), $content);
+
+});
+
+Event::listen('admin.cancelticket', function($user,$transactions,$adarray){
+				
+				$content = Email::make(s("email_content_cancel_ticket"), array(
+				"[username]" => $user->email,
+				"[bookingid]" => $transactions->booking_id,
+				"[refundamount]" => $transactions->amount,
+				"[transactiontype]"=> $transactions->type
+			));	
+
+	Email::send($adarray, s("email_subject_cancel_ticket"), $content);
+
+});
+
 
 
 Event::listen('user.disabled', function($user)

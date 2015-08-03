@@ -278,12 +278,12 @@ font-size: 20px;
               <h3 class="omnes text-body-large event-card__header l-block-3">{{$event->name}}</h3>
 
 
-              <p class="event-card__organizer text-body--faint text--truncated l-block-1">
-              	<span class="event-card__format hide-small">{{$event->type}}</span> 
-              	@if($event->organizer['profile'] == 1)
-              	<span class="hide-small event-card__organizer">by {{$event->organizer['name']}}</span>
-              	@endif
-              </p>
+             <!--  <p class="event-card__organizer text-body--faint text--truncated l-block-1">
+                <span class="event-card__format hide-small">{{$event->type}}</span> 
+                @if($event->organizer['profile'] == 1)
+                <span class="hide-small event-card__organizer">by {{$event->organizer['name']}}</span>
+                @endif
+              </p> -->
 
 
               <ul class="bullet-list-ico l-block-1">

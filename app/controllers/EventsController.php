@@ -113,10 +113,14 @@ class EventsController extends BaseController {
 
 	public function getEventdetails($event_id) {
 
+
 		$vars['pageTitle'] = 'Event Details';
         $flag=0;
         $date = date('Y-m-d H:i:s',time());
+        //return $date;
 		$event = EventB::find($event_id);
+		if($event != NULL)
+		{
 		$event_date=$event->start_date;
 		$crrdate = date('Y-m-d', strtotime($date));
    		$crrtime = date('H:i:s', strtotime($date));
@@ -138,6 +142,7 @@ class EventsController extends BaseController {
     	$eventtime = date('H:i:s', strtotime($start_time));
     	$datewant = new DateTime($eventtime);
     	$event_time=$datewant->sub(new DateInterval('P0Y0M0DT2H0M0S'))->format('H:i:s');
+    	//return $event_time."||".$crrtime."||".$event_time;
     	if($crrdate > $event_date)
     	 {
     	 	$flag=0;
@@ -217,6 +222,9 @@ class EventsController extends BaseController {
 
 				$type->seats_left = $count;
 
+				Log::info($tickettype->id);
+				Log::info($count);
+
 				if($count > 0) {
 					$event_obj->tickets_available = 1;
 				}
@@ -235,14 +243,21 @@ class EventsController extends BaseController {
 				}
 				array_push($types,$type);
 			}
+			//dd($types);
 			$vars['tickettypes'] = $types;
 
 			$vars['event'] = $event_obj;
 
 			$vars['flag']=$flag;
 		}
-
+		//dd($vars['tickettypes'][0]->type);
 		return View::make('event.eventdetails',$vars);
+	  }
+	  else
+	  {
+	  	return Redirect::to('/');
+	  }
+
 	}
 
 	public function getOrganizerprofile($user_id) {

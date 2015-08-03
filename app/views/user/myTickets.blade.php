@@ -90,9 +90,16 @@
                             <div class="l-block-2">
                                 
                               Total : {{$event->transaction['amount']}} USD
-              
 
                             </div>
+                            <div class="l-block-2">
+                                
+
+                             <button type="button"><a href="{{URL::to('user/ticketcancel/' . $event->transaction['id'])}}" style="color: #050606">Cancel Ticket</a></button>
+
+                            </div>
+
+                            
                         </section>
                     </div>
                     @endforeach

@@ -263,8 +263,10 @@ class UserController extends BaseController {
         $vars['booking_fees_base'] = s('booking_fees_base');
 
         $event = EventB::create($vars);
+        //return $event->user_created;
+        $user=User::find($event->user_created);
 
-            
+        //return $user->id;
 
         $free_ticket_titles = Input::get('ticketType');
         $free_seats = Input::get('qnty');
@@ -341,6 +343,7 @@ class UserController extends BaseController {
         	$ticket_type = TicketType::create($t_vars);
         }
 
+        Event::fire('user.createevent',array($user,$event));
         return Redirect::to('/events/eventdetails/'.$event->id);
 
 	}
@@ -470,20 +473,26 @@ class UserController extends BaseController {
 
 			foreach($tickettypes as $type) {
 
-				$revenue->tickets_sold = Ticket::where('tickettype_id',$type->id)->count();
+				$tickets_sold = Ticket::where('tickettype_id',$type->id)->count();
 
-				$revenue->amount = $revenue->tickets_sold*($type->total_price - $type->fees_actual);
+				$revenue->tickets_sold += $tickets_sold;
 
-				$revenue_amount = $revenue_amount + $revenue->amount;
+				$amount = $tickets_sold*($type->total_price - $type->fees_actual);
+
+				$revenue->amount += $amount;
+
+				
 			}
 			array_push($revenues,$revenue);
+
+			$revenue_amount = $revenue_amount + $revenue->amount;
 
 		}
 
 		$vars['revenues'] = $revenues;
 		$vars['revenue_amount'] = $revenue_amount;
 
-
+        
 		if(!Session::has('password') && !Session::has('social') && !Session::has('close') && !Session::has('payouts'))
 
 
@@ -589,6 +598,88 @@ class UserController extends BaseController {
 		return Redirect::back()->with('success_pwd','Your password has been changed');
 	}
 
+    public function getEventcancel($event_id)
+    {
+        $user_id=Auth::user()->id;
+		$events=EventB::find($event_id);
+		$user=User::find($user_id);
+		//return $user->email;
+		if($events!=NULL)
+		{	
+		$event_usrid=$events->user_created;
+		if($event_usrid==$user_id)
+		{
+			$events->delete();
+			Event::fire('user.cancelevent', array($user,$events));
+			Session::flash('successful', "xxx");
+			return Redirect::to('/');
+
+		}else {
+
+            Session::flash('unsuccessful', "yyy");
+			return Redirect::to('events/eventdetails/' . $events->id);
+		}
+	}
+		else
+		{   
+			Session::flash('noevent', "zzz");
+			return Redirect::to('/' );
+		}
+
+       
+    }
+
+    public function getTicketcancel($transaction_id)
+    {
+    		$transactions=Transaction::find($transaction_id);
+    		$user_id=Auth::user()->id;
+    		$user=User::find($user_id);
+    		$count_tkt=0;
+    		if($transactions!=NULL and $transactions->is_cancelled==0)
+    		{
+    		$count_tkt=Ticket::where('transaction_id',$transaction_id)->count();
+    		$ticket=Ticket::where('transaction_id',$transaction_id)->first();
+    		$event=EventB::where('id',$ticket->event_id)->first();
+    		$ticket_type=$ticket->tickettype_id;
+    		$check_ticket_count = TicketType::where('id',$ticket_type)->first();
+    		$per_ticket_amt=$check_ticket_count ->price;
+    		$refund_amount=0;
+    		$tkt_type=$check_ticket_count ->type;
+    		$admi = Admin::get();
+			$adarray = array();
+			foreach ($admi as $key) {
+				$adarray[] = $key->username;
+			}
+    		//return $adarray;
+    		if( $tkt_type == 0 ) {
+    			
+    				Ticket::where('transaction_id',$transaction_id)->delete();
+    				$transactions->is_cancelled=1;
+    				$transactions->save();
+    				Event::fire('user.cancelticket', array($user,$transactions));
+    				Event::fire('admin.cancelticket', array($user,$transactions,$adarray));
+    				return Redirect::to('user/mytickets/' . Auth::user()->id);
+
+    				
+    			}
+    		else
+    		{
+    			 Ticket::where('transaction_id',$transaction_id)->delete();
+    			 $transactions->is_cancelled=1;
+    			 $transactions->save();
+    			 $refund_amount=$per_ticket_amt*$count_tkt;
+    			 Event::fire('user.cancelticket', array($user,$transactions));
+    			 Event::fire('admin.cancelticket', array($user,$transactions,$adarray));
+   	  			 return Redirect::to('user/mytickets/' . Auth::user()->id);
+    			}
+		    			 
+    		
+    	   }else{
+    			 return Redirect::to('user/mytickets/' . Auth::user()->id);  
+    		 }
+
+    }
+
 	public function getMytickets()
 	{
 
@@ -596,7 +687,11 @@ class UserController extends BaseController {
 
 		$user_id = Auth::user()->id;
 
+		//return $user_id;
+
 		$transactions = Transaction::where('user_id',$user_id)->where('is_cancelled',0)->get();
+
+		//return $transactions;
 
 		$past = array();
 		$upcoming = array();
@@ -605,11 +700,13 @@ class UserController extends BaseController {
 
 			$tickets = Ticket::where('transaction_id',$transaction->id)->get();
 
+            //return $tickets;
 
 			$type_quantity = array();
 
 			foreach($tickets as $ticket) {
 
+              // Log::info($ticket);
 				if(array_key_exists($ticket->tickettype_id, $type_quantity)) {
 					$quantity = $type_quantity[$ticket->tickettype_id] + 1;
 					$type_quantity[$ticket->tickettype_id] = $quantity;
@@ -619,12 +716,17 @@ class UserController extends BaseController {
 				}
 
 			}
-
+            
+            
 			$name_quantity = array();
 
 			foreach($type_quantity as $id => $quantity) {
+				//Log::info("inside fail");
 
+              //Log::info("$id");
 				$name = TicketType::find($id)->title;
+
+
 
 				$name_quantity[$name] = $quantity;
 			}
@@ -635,7 +737,7 @@ class UserController extends BaseController {
 			if($event) {
 				$nobj = EventB::create_event_obj($event);
 
-				$nobj->transaction = array('amount' => $transaction->amount, 'type' => $transaction->type, 'address' => $transaction->address); 
+				$nobj->transaction = array('id'=>$transaction->id,'amount' => $transaction->amount, 'type' => $transaction->type, 'address' => $transaction->address); 
 				
 				$nobj->tickets = $name_quantity;
 

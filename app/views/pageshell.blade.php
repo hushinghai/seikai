@@ -516,7 +516,7 @@ color: white;
 
       <div class="g-group l-padded-v-3 text--centered show-large l-block-2">
         <div class="g-cell g-cell-12-12">
-          <p class="footer-copyright text-body-medium l-block-4">Copywrite &copy {{s('title')}} 2015
+          <p class="footer-copyright text-body-medium l-block-4">Copyright &copy {{s('title')}} 2015
           </p>
         </div>
       </div>

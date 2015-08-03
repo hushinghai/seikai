@@ -546,6 +546,145 @@
 			
 			</div><!--/row-->
 
+	<div class="row-fluid sortable">
+				<div class="box span12">
+					<div class="box-header" data-original-title>
+						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Event Create Email Content</h2>
+						
+					</div>
+
+					@if(Session::has('create_event_content'))
+			
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							Email Content have been updated
+						</div>
+					@endif
+					<p><b>User creates an event</b></p> 
+					<div class="box-content">
+						<form class="form-horizontal" action="{{URL::to('/admin/createeventemail')}}" method="post">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">Subject : </label>
+									<div class="controls">
+										<input type="text" class="input-xlarge focused" name="createeventemailsubject" id="encryption" value="{{$createeventemailsubject}}"/>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label">Content : </label>
+									<div class="controls">
+										<textarea class="span8 m-wrap" rows="3" name="createeventemail">{{$createeventemail}}</textarea>
+										</br><b>Type [username] to print the user name. </b>
+										</br><b>Type [eventname] to print the event name. </b>
+										</br><b>Type [startdate] to print the start date.</b>
+										</br><b>Type [starttime] to print the start time.</b>
+										</br><b>Type [enddate] to print the end date.</b>
+										</br><b>Type [endtime] to print the end time.</b>
+									</div>
+								</div>
+							  <div class="form-actions">
+								<button type="submit" class="btn btn-primary">Save changes</button>
+							  </div>
+							</fieldset>
+						  </form>
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+
+
+<div class="row-fluid sortable">
+				<div class="box span12">
+					<div class="box-header" data-original-title>
+						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Event Cancel Email Content</h2>
+						
+					</div>
+
+					@if(Session::has('cancel_event_content'))
+			
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							Email Content have been updated
+						</div>
+					@endif
+					<p><b>User cancels an event</b></p> 
+					<div class="box-content">
+						<form class="form-horizontal" action="{{URL::to('/admin/canceleventemail')}}" method="post">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">Subject : </label>
+									<div class="controls">
+										<input type="text" class="input-xlarge focused" name="canceleventemailsubject" id="encryption" value="{{$canceleventemailsubject}}"/>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label">Content : </label>
+									<div class="controls">
+										<textarea class="span8 m-wrap" rows="3" name="canceleventemail">{{$canceleventemail}}</textarea>
+										</br><b>Type [username] to print the user name. </b>
+										</br><b>Type [eventname] to print the event name. </b>
+	
+									</div>
+								</div>
+							  <div class="form-actions">
+								<button type="submit" class="btn btn-primary">Save changes</button>
+							  </div>
+							</fieldset>
+						  </form>
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+
+<div class="row-fluid sortable">
+				<div class="box span12">
+					<div class="box-header" data-original-title>
+						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Ticket Cancel Email Content</h2>
+						
+					</div>
+
+					@if(Session::has('cancel_ticket_content'))
+			
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							Email Content have been updated
+						</div>
+					@endif
+					<p><b>User cancels a ticket</b></p> 
+					<div class="box-content">
+						<form class="form-horizontal" action="{{URL::to('/admin/cancelticketemail')}}" method="post">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">Subject : </label>
+									<div class="controls">
+										<input type="text" class="input-xlarge focused" name="cancelticketemailsubject" id="encryption" value="{{$cancelticketemailsubject}}"/>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label">Content : </label>
+									<div class="controls">
+										<textarea class="span8 m-wrap" rows="3" name="cancelticketemail">{{$cancelticketemail}}</textarea>
+										</br><b>Type [username] to print the user name. </b>
+										</br><b>Type [bookingid] to print the event name. </b>
+										</br><b>Type [refundamount] to print the refund amount.</b>
+										</br><b>Type [transactiontype] to print the transaction type.</b>
+
+									</div>
+								</div>
+							  <div class="form-actions">
+								<button type="submit" class="btn btn-primary">Save changes</button>
+							  </div>
+							</fieldset>
+						  </form>
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+
+
 		
 
 @stop

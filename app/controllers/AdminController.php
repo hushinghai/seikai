@@ -354,6 +354,8 @@ class AdminController extends BaseController {
 
 		$events = EventB::all();
 
+
+
 		$organisers = array();
 
 		foreach($events as $event) {
@@ -621,7 +623,7 @@ class AdminController extends BaseController {
         $event = EventB::create($vars);
         
         
-        for($i = 0; $i<count($s); $i++){
+        for($i = 0; $i<count($event); $i++){
 	        
 	       
 	        
@@ -689,9 +691,6 @@ class AdminController extends BaseController {
 	        
         }
         
-
-       
-
 
         Session::flash('successful', "user created successfully");
 
@@ -1291,6 +1290,11 @@ class AdminController extends BaseController {
 		$vars['contactorganizeremail'] = s("email_content_contact_organizer");
 		
 		$vars['adminpayoutemail'] = s("email_content_admin_payout");
+		$vars['createeventemail'] = s("email_content_create_event");
+
+		$vars['canceleventemail'] = s("email_content_cancel_event");
+		
+		$vars['cancelticketemail'] = s("email_content_cancel_ticket");
 
 		
 		
@@ -1306,12 +1310,43 @@ class AdminController extends BaseController {
 
 		$vars['ticketsoldemailsubject'] = s("email_subject_ticket_sold");
 		$vars['buyticketemailsubject'] = s("email_subject_buy_ticket");
+		$vars['createeventemailsubject'] = s("email_subject_create_event");
+		$vars['canceleventemailsubject'] = s("email_subject_cancel_event");
+		$vars['cancelticketemailsubject'] = s("email_subject_cancel_ticket");
 		
 		return View::make('admin/email', $vars);
 
 	}
 
+    public function postCancelticketemail() {
 
+		set_setting("email_content_cancel_ticket", Input::get('cancelticketemail'));
+		
+		set_setting("email_subject_cancel_ticket", Input::get('cancelticketemailsubject'));
+		
+		return Redirect::to('admin/emailsettings')->with('cancel_ticket_content', "Email Content updated Successfully");
+		
+	}
+
+   public function postCanceleventemail() {
+
+		set_setting("email_content_cancel_event", Input::get('canceleventemail'));
+		
+		set_setting("email_subject_cancel_event", Input::get('canceleventemailsubject'));
+		
+		return Redirect::to('admin/emailsettings')->with('cancel_event_content', "Email Content updated Successfully");
+		
+	}
+
+	 public function postCreateeventemail() {
+
+		set_setting("email_content_create_event", Input::get('createeventemail'));
+		
+		set_setting("email_subject_create_event", Input::get('createeventemailsubject'));
+		
+		return Redirect::to('admin/emailsettings')->with('create_event_content', "Email Content updated Successfully");
+		
+	}
 	public function postForgotpasswordemail() {
 
 		set_setting("email_content_forgot_password", Input::get('forgotpasswordemail'));

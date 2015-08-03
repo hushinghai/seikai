@@ -359,6 +359,26 @@ text-align: center;
 
 
 @section('content')
+
+ @if(Session::has('successful'))
+<div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              Event cancelled successfully
+            </div>
+
+ @elseif(Session::has('unsuccessful'))
+<div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              User do not have access to cancel event
+            </div>
+         
+  @elseif(Session::has('noevent'))
+<div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              Event not present
+            </div>
+          @endif
+
   <div class="global-mask">
   </div>
 
@@ -503,18 +523,21 @@ text-align: center;
                 </tbody>
               </table>
 
-              <form id="registrationForm" name="registrationForm" method="post" action="https://www.sandbox.paypal.com/cgi-bin/webscr">
+              <form id="registrationForm" name="registrationForm" method="post" action="https://sandbox.paypal.com/cgi-bin/webscr">
                   <input type="hidden" name="submitted" value="1">
                   <input type="hidden" name="ismanual" value="">
                   <input type="hidden" name="payment_type" value="free">
                   <input type="hidden" name="crumb" value="69109f0415945c">
                   <input type="hidden" name="w" value="">
                   <input type="hidden" name="_nomo" value="">
+                  <input type="hidden" name="return" id="return" value="{{URL::to('/tickets/buytickets')}}" >
+                  <input type="hidden" name="rm" id="rm" value="2" >
+
 
 
 
                   <input type="hidden" name="cmd" value="_xclick">
-                                                       <input type="hidden" name="business" value="{{ s('paypalusername') }}">
+                                                       <input type="hidden" name="business" value="{{s('paypalusername')}}">
                                                        <input type="hidden" name="currency_code" value="USD">
                                                        <input type="hidden" name="item_name" value="{{$event->title}}">
                                                        <input type="hidden" name="item_number" value="{{$event->id}}">
@@ -522,6 +545,7 @@ text-align: center;
 
                 <table class="registrationTable" cellpadding="2" cellspacing="0" border="0" width="100%">
                   <tbody>
+                    
                     <tr>
                       <td align="right"><label for="first_name">First Name:</label></td>
                       <td><span class="error">*</span></td>
@@ -716,6 +740,7 @@ target="_top">
                       <div id="descriptionDiv32234881" style="font-size: 11px; line-height: 12px; margin: 5px 0 0 0;">
                          {{$tickettype->details}}
                       </div>
+                      <input type="hidden" id="ticket_id" name="ticket_id" value="{{$tickettype->id}}">
 
                     </td>
 
@@ -795,8 +820,19 @@ target="_top">
 
           <div class="panel_section">
             {{$event->details}}
+            @if(Auth::user())
+
+            <div class="l-block-2">
+                                
+
+                <button type="button" ><a href="{{URL::to('user/eventcancel/' . $event->id)}}" style="text-decoration: none !important ; color:#050606">Cancel Event</a> </button>
+                            </div> 
+                            @endif
+   
+                            
 
           </div>
+
           <!-- end panel_body -->
 
           @if($event->organizer['profile'] == 1 && $event->organizer['disabled'] == 'false')
@@ -1051,9 +1087,16 @@ $('#completeRegisteration').click(function(e) {
 	  data['email'] = $("#email_address").val();
 	  data['address'] = $("#address").val();
 	  data['contact_no'] = $("#contact_no").val();
+    data['ticket_id'] = $("#ticket_id").val();
 	  data['tickets'] = tickets;
+    //alert(JSON.stringify(tickets));
 	  data['event_id'] = {{ $event->id }};
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
+    $.post('{{ URL::to("/tickets/addticketdetails") }}', data, function(){  
+      
+    });
+
 if($("#first_name").val() && $("#last_name").val() && $("#email_address").val() &&  re.test($("#email_address").val()) && /^[a-zA-Z ]+$/.test( $("#last_name").val()) && /^[a-zA-Z ]+$/.test( $("#first_name").val()) && /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test($("#contact_no").val()) && $("#address").val() && $("#contact_no").val())	
 {
 
@@ -1077,15 +1120,15 @@ if($("#first_name").val() && $("#last_name").val() && $("#email_address").val() 
   }
   else{ 
 	  
+
 	  
-	
-	  
-	  $.post('{{ URL::to("/tickets/buytickets") }}', data, function(){
+	  // $.post('{{ URL::to("/tickets/buytickets") }}', data, function(){
 		 
-		 	$("#registrationForm").submit();
+		 // 	$("#registrationForm").submit();
 		  
-	  });
-	  
+	  // });
+	  //$('#completeRegisteration').hide();
+    $("#registrationForm").submit();
 	  
   
 
