@@ -326,8 +326,8 @@ font-weight: 300;
                     <div class="g-cell g-cell-1-1">
                       <label class="responsive-form__label--primary">Organizer name</label>
                     </div>
-                      <span class="add-edit g-cell g-cell-1-1"><a class="edit" id="editOrganizer" >Edit this organizer</a></span>
-                      <span class="cancel-edit g-cell g-cell-1-1"><a class="cancel" id="canceleditOrganizer">Cancel</a></span>
+                      <span class="add-edit g-cell g-cell-1-1"><a class="edit" id="editOrganizer" onclick='showcancel()'>Edit this organizer</a></span>
+                      <span id="cancel_show" class="cancel-edit g-cell g-cell-1-1" style="display:none"><a class="cancel" id="canceleditOrganizer">Cancel</a></span>
                    <div>
 
                    <label id="organizerName" style="padding-left:20px" >{{ $org_name }}</label>
@@ -581,6 +581,12 @@ font-weight: 300;
 
 <script src="{{ URL::to('/timepicker/jquery.timepicker.min.js') }}"></script>
   <script>
+
+function showcancel()
+{
+   $("#cancel_show").show();
+}
+
 
   $('.jqte-test').jqte();
     

@@ -135,7 +135,7 @@ border-color:rgba(128, 128, 128, 0.3);
 
 .g-cell
 {
-padding: 0px 5px 5px 20px;
+padding: 0px 5px 5px 2px;
 }
 
 .js-d-toggle {

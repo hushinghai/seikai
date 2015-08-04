@@ -389,7 +389,7 @@ class UserController extends BaseController {
 	public function postOrgprofile() {
 
 		$profile = Profile::where('user_id',Auth::user()->id)->first();
-
+        //dd(Auth::user()->id);
 		$image = Input::file('file');
 
 		if($image) {
@@ -416,6 +416,7 @@ class UserController extends BaseController {
 		$profile->name = Input::get('name');
 		$profile->description = Input::get('description');
 		$profile->website = Input::get('website');
+		//dd(Input::get('facebook_link'));
 		$profile->facebook_link = Input::get('facebook_link');
 		$profile->image_url = $fullname;
 		if(Input::has('use_description')) {

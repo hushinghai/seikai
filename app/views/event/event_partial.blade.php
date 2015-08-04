@@ -154,7 +154,10 @@
                   </li><span class="text-body--faint text--truncated">{{$event->venue}}</span>
                   </li>
                 </ul>
+   
+                           
               </div>
+              
 
 
               <div class="event-card__footer l-padded-v-3 clrfix">
@@ -177,6 +180,7 @@
                   </section>
                 </div>
               </div>
+            
             </div>
           </div>
 

@@ -272,8 +272,8 @@ margin-left:9%;
     <div class="g-cell g-cell-12-12 g-cell-lg-4-12">
         <aside class="js-organizer-social organizer-social column">
     
-    @if($organizer != null)
-    <div class="fb-like-box" data-href="http://www.facebook.com/ .{{$organizer->facebook_link}}" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
+    @if($organizer != null and $organizer->facebook_link !=NULL)
+    <div class="fb-like-box" data-href="http://www.facebook.com/{{$organizer->facebook_link}}" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
     @endif
 
         

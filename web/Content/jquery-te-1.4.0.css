@@ -58,6 +58,7 @@
 	width:70px;
 	height:16px;
 	overflow:hidden;
+	padding-bottom: 20px;
 }
 .jqte_tool.jqte_tool_1 .jqte_tool_text {
 	font:bold 13px Arial,sans-serif;

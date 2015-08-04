@@ -854,6 +854,28 @@ return array('success' => '0','error' => 1 , 'error_msg' => "Not authorized user
     	
 	}
 
+
+public function postTransactiondetails()
+{
+	$user_id = Input::get('user_id');
+	$ticket_id = Input::get('ticket_id');
+	$tickets=Ticket::where('id',$ticket_id)->where('user_id',$user_id)->first();
+	//dd($tickets);
+	if($tickets!=NULL)
+	{	
+	$transaction_id=$tickets->transaction_id;
+    $response_array = array('success'=>true, 'transaction_id'=>$transaction_id);
+	return Response::json($response_array);
+	}
+	else
+	{
+		$response_array = array('success'=>false, 'error_messages'=>'No tickets present');
+		$response_code = 200;
+		return Response::json($response_array, $response_code);
+	}
+
+ }
+
 public function postEventdelete()
 {
 	$eventid = Input::get('event_id');

@@ -10,7 +10,6 @@ public static function config_set(){
 
     if(s('email_host') && s('email_port') && s('email_username') && s('email_password') && s('email_encryption'))
     {
-    
         return TRUE;
     }
     else{
@@ -59,10 +58,25 @@ public static function send($emailid,$subject, $content)
 
     $vars['body'] = $content;
 
+    $validator= Validator::make(
+        array(
+            'emailid' => $emailid),
+        array(
+            'emailid' => 'required|email')
+        );
+
+    if($validator->fails())
+    {
+        Log::info("Invalid emailid");
+    }
+    else
+    {
+
     Mail::send('user.email', $vars, function($message) use ($emailid,$subject)
     {
       $message->to($emailid, s('title'))->subject( $subject);
     });
+  }
 }
 
 

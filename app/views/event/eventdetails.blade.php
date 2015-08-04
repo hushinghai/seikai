@@ -101,6 +101,8 @@ margin-top: 5%;
     padding: 18px 0;
     margin-bottom: 26px;
     text-align: center;
+    position:relative;
+    z-index:10;
 }
 #track_event {
     display: inline-block;
@@ -861,7 +863,7 @@ target="_top">
            @if(Auth::user())
 
             @if($event->bookmarked)
-              <a class="eb_button default large unsaved bookmark" data-bookmarked="false" data-eid="{{$event->id}}" id="saveEvent" onclick="saveEventLoggedIn(this)">Save This Event</a>
+              <a class="eb_button default large unsaved bookmark" data-bookmarked="false" data-eid="{{$event->id}}" data-issaved="" id="saveEvent" onclick="saveEventLoggedIn(this)">Save This Event</a>
              @else
               <a class="eb_button default large saved" data-bookmarked="false" data-eid="{{$event->id}}" id="saveEvent" onclick="#">Event Saved</a>
 
@@ -1175,10 +1177,12 @@ $(function(){
     
     function saveEventLoggedIn(e)
     {      
-      console.log(e);
-      
+      //console.log(e);
+      var is_saved=$('#saveEvent').attr('data-issaved');
+      if(is_saved == '')
+      {
 
-
+      $('#saveEvent').attr('data-issaved','true');
       $.ajax(
           {
             // The link we are accessing.
@@ -1197,6 +1201,7 @@ $(function(){
             error: function(){
               alert( "AJAX - error()" );
               
+            
             },
            
             success: function( strData ){
@@ -1205,6 +1210,7 @@ $(function(){
             }
           }             
           );
+    }
     }
 
     function saveevent() {

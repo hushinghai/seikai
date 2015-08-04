@@ -16908,6 +16908,8 @@ decoration: none;
     background: url("") repeat-x scroll 0 50% #afdc64;
 }
 .eb_button.large.default {
+     display: block;
+     margin: 0px auto;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -16927,7 +16929,7 @@ none;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 700;
-    height: 44px;
+    height: 23px;
     padding: 9px 23px;
     text-decoration: none;
     text-

@@ -265,6 +265,7 @@ class EventsController extends BaseController {
 		$vars['pageTitle'] = 'Organizer Profile';
 
 		$vars['organizer'] = Profile::where('user_id',$user_id)->first();
+		//dd($vars['organizer']);
 
 		$past = array();
 		$upcoming = array();
