@@ -250,6 +250,27 @@ class UserController extends BaseController {
         $vars['end_date'] = date("Y-m-d H:i:s", $timestamp_end);
         $vars['end_time'] = $input['end_time'];
 
+        $strttime=$this->timeconv($vars['start_time']);
+        $endtime=$this->timeconv($vars['end_time']);
+
+        //return $vars['start_date'].":::".$strt_time."::::".$vars['end_date']."::::".$endtime;
+
+        if($vars['start_date']>$vars['end_date'])
+         {
+         	 $type='failed';
+         	 $message='Start date cannot be later than end date';
+             return Redirect::to('user/createevent')->with('message',$message)->with('type',$type);
+         }
+        elseif($vars['start_date']==$vars['end_date'])
+         {
+         	if($strttime>$endtime)
+         	{
+         	  $type='failed';
+         	  $message='Start time cannot be later than end time';
+              return Redirect::to('user/createevent')->with('message',$message)->with('type',$type);
+         	}
+         }
+
         $vars['image_url'] = $fullname;
 
         $vars['category'] = $input['eventcat'];

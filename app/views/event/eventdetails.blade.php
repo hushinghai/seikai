@@ -671,7 +671,7 @@ text-align: center;
 
                   <h2>
 
-                    {{$event->d_start_date}} from {{$event->startTime}} to 
+                    From {{$event->d_start_date}} {{$event->startTime}} to 
 
                     @if($event->startDate != $event->endDate) 
                       {{$event->d_end_date}} 
@@ -893,7 +893,7 @@ target="_top">
             </h2>
 
 
-            <h2 style="padding-bottom: 0;"><span class="dtstart">{{$event->d_start_date}} from {{$event->startTime}} to 
+            <h2 style="padding-bottom: 0;"><span class="dtstart">From {$event->d_start_date}} {{$event->startTime}} to 
 
                     @if($event->startDate != $event->endDate) 
                       {{$event->d_end_date}} 

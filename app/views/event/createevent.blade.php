@@ -139,6 +139,13 @@ font-weight: 300;
 
 @section('content')
 
+  @if(Session::has('type'))
+           <div class="alert alert-success" style="font-size:14px;color: red";>
+              {{ Session::get('message') }}
+          </div>
+            
+  @endif
+
   <div class="with-persistent-nav" id="main_content">
     <nav class="btn-group g-grid g-group">
       <div class="g-cell g-cell-1-1 g-cell-md-6-12 l-block-2 l-align-center-sm">
