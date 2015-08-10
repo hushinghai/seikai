@@ -338,6 +338,104 @@ class ApiController extends BaseController {
 
 	}
 
+	public function postOrganiserprofile(){
+
+		$inputs = Input::all();
+
+		$event_id = $inputs['event_id'];
+
+		$event=EventB::where('id',$event_id)->first();
+
+		if($event != NULL)
+		{
+
+		$user_id=$event->user_created;
+
+		$profile = Profile::where('user_id',$user_id)->first();
+		$user = User::find($user_id);
+
+		$result = array();
+		$past = array();
+		$upcoming = array();
+
+		if($profile != null) {
+
+			$details = array('id' => $user_id, 'profile' => "1", 'name' => $profile->name, 'email' =>$user->email, 'no' => $profile->no,'details' => $profile->description, 'address' => $profile->city);
+			if($profile->image_url) {
+				$details['image_url'] = $profile->image_url;
+			} else {
+				$details['image_url'] = "default_profile.png";
+			}
+		
+		} else {
+			$details = array('id' => $user_id, 'profile' => "0", 'name' => "",'email' =>$user->email,'no' => "",'details' => "", 'address' => "" ,'image_url'=>"");
+		}
+		if($user->role == 0) {
+
+			$details['disabled'] = 'false';
+
+		} else {
+			$details['disabled'] = 'true';
+		}
+
+
+		$events = EventB::where('user_created',$user_id)->where('status',0)->get();
+
+		foreach($events as $event) {
+
+			$nobj = new stdClass;
+
+			$nobj->id = $event->id;
+			$nobj->title = $event->name;
+			if($event->image_url) {
+				$nobj->image_url = $event->image_url;
+			} else {
+				$nobj->image_url = "default_event.jpg";
+			}
+			$nobj->details = $event->description;
+
+			$nobj->d_start_date = date("F j",strtotime($event->start_date));
+			$nobj->startDate = $event->start_date;
+			$nobj->startTime = $event->start_time;
+
+			$nobj->d_end_date = date("F j",strtotime($event->end_date));
+			$nobj->endDate = $event->end_date;
+			$nobj->endTime = $event->end_time;
+
+			$nobj->cat_id = $event->category;
+			$nobj->status = $event->status;
+
+		if($event->category){
+
+			$nobj->category = EventCategory::find($event->category)->name;
+		}else{
+			$nobj->category = "Uncategorized";
+		}
+
+			$nobj->location = array("lat"=> $event->lat, "lng" => $event->lng, "address" => $event->venue, "city" => $event->city);
+
+			if($nobj->startDate >= date('Y-m-d',time())) {
+				$nobj->pastevent = 'false';
+				array_push($upcoming, $nobj);
+			} else {
+				$nobj->pastevent = 'true';
+				array_push($past, $nobj);
+			}	
+
+		}
+
+		$result['details'] = $details;
+		$result['past'] = $past;
+		$result['upcoming'] = $upcoming;
+
+		return $result;
+	}
+	else
+	{
+		return array('success' => '0','error' => '1', "message" => 'event doest not exist');
+	}
+	}
+
 	public function postOrganiserdetails(){
 
 		$inputs = Input::all();
@@ -361,7 +459,7 @@ class ApiController extends BaseController {
 			}
 		
 		} else {
-			$details = array('id' => $user_id, 'profile' => "0", 'email' =>$user->email );
+			$details = array('id' => $user_id, 'profile' => "0", 'name' => "",'email' =>$user->email,'no' => "",'details' => "", 'address' => "" ,'image_url'=>"");
 		}
 		if($user->role == 0) {
 
@@ -464,15 +562,16 @@ class ApiController extends BaseController {
 
 				$name_quantity[$name] = $quantity;
 			}
-
-
+        
+            //return "hello";
 			$event = EventB::find($tickets->first()['event_id']);
+			//dd($event);
 
 			if($event) {
 				$nobj = EventB::create_event_obj($event);
 
-				$nobj->transaction = array('amount' => $transaction->amount, 'type' => $transaction->type, 'address' => $transaction->address); 
-				
+				$nobj->transaction = array('transaction_id'=>$transaction->id,'amount' => $transaction->amount, 'type' => $transaction->type, 'address' => $transaction->address); 
+			
 				$nobj->tickets = $name_quantity;
 
 				if($nobj->startDate >= date('Y-m-d',time())) {
@@ -487,6 +586,8 @@ class ApiController extends BaseController {
 
 		$result['past'] = $past;
 		$result['upcoming'] = $upcoming;
+
+		//return "hi";
 
 		return $result;
 
