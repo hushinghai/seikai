@@ -7,5 +7,5 @@ composer.lock
 .DS_Store
 Thumbs.db
 /.idea
-/public/uploads/*
+
 /app/config/local/*
