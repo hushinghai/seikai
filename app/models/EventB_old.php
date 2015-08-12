@@ -1,6 +1,6 @@
 <?php
 
-class EventB extends Eloquent {
+class EventB_old extends Eloquent {
 
 	 protected $table = 'events';
 

@@ -9,7 +9,7 @@
 		"artdarek/oauth-4-laravel": "dev-master",
 		"hybridauth/hybridauth": "dev-master",
 		"facebook/php-sdk-v4" : "~4.0",
-		"guzzlehttp/guzzle" : "dev-master"
+		"guzzlehttp/guzzle" : "~4.0"
 	},
 	"autoload": {
 		"classmap": [

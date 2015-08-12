@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 07, 2015 at 07:40 PM
+-- Generation Time: Aug 12, 2015 at 08:46 PM
 -- Server version: 5.5.43-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.9
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `EventBolt`
+-- Database: `evenbolt2`
 --
 
 -- --------------------------------------------------------
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 --
 
 INSERT INTO `admins` (`id`, `username`, `password`, `last_ip`, `last_login`, `created_at`, `updated_at`) VALUES
-(1, 'preethi', 'preethi', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 'pandiyaraja', '$2a$10$iXBKnkWesIvKfHMzV4T2IugzThU8SG7FjgF3JEgI0yO0zAGOi01kO', '127.0.0.1', '2015-08-12 15:10:21', '0000-00-00 00:00:00', '2015-08-12 09:40:21');
 
 -- --------------------------------------------------------
 
@@ -88,15 +88,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `name`, `image_url`, `city`, `description`, `category`, `event_type`, `user_created`, `venue`, `start_date`, `end_date`, `start_time`, `end_time`, `lat`, `lng`, `payment_fees`, `booking_fees_base`, `booking_fees`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Medical Camp', '', 'Chennai, Tamil Nadu, India', '', 1, 1, 1, 'Chromepet', '2015-06-27', '2015-06-27', '10:00pm', '2:00pm', 13.08, 80.27, 0.00, 0.00, 0.00, 0, '2015-06-26 07:06:28', '2015-06-26 07:06:28'),
-(2, 'Medical Camp', 'nzlnnuszscatting.jpg', 'chennai', 'Medical Camp', 1, 1, 1, 'chrompet', '2015-06-27', '2015-06-27', '12:30am', '2:30am', 0.00, 0.00, 0.00, 0.00, 0.00, 0, '2015-06-26 07:25:45', '2015-06-26 07:25:45');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -112,19 +104,7 @@ CREATE TABLE IF NOT EXISTS `event_categories` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `event_categories`
---
-
-INSERT INTO `event_categories` (`id`, `name`, `image_url`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Medical', 'dfgf', 'Health Programme', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'Business and Professionals', 'fggf', 'profit', '2015-06-25 23:30:00', '0000-00-00 00:00:00'),
-(3, 'Travel', 'hgkg', 'Enjoyment', '2015-06-25 23:32:00', '0000-00-00 00:00:00'),
-(4, 'Education', 'gggf', 'Education is very important', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 'Music', 'hgh', 'Music is beautifull', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 'Others', 'gsg', 'gfg', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -140,19 +120,7 @@ CREATE TABLE IF NOT EXISTS `event_types` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `event_types`
---
-
-INSERT INTO `event_types` (`id`, `name`, `image_url`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Medical camp', 'gfkg', 'Giving awarness to public', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'Travel show,Customershow', 'dd', 'Profit', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'Tour and Outdoor', 'fkgh', 'gfgfkjgfj', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 'Conference,Convetion', 'fg', 'fgsksgd', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 'Competition', 'fg', 'ghfgh', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 'others', 'fgkg', 'gfsfyrgh', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -182,7 +150,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2014_12_02_134612_create_ticket_types_table', 1),
 ('2014_12_19_000314_create_settings_table', 1),
 ('2014_12_19_153457_create_payouts_table', 1),
-('2014_12_19_234729_create_admins_table', 1);
+('2014_12_19_234729_create_admins_table', 1),
+('2015_07_29_152501_add_is_cancelled_to_transactions', 2);
 
 -- --------------------------------------------------------
 
@@ -251,7 +220,64 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=52 ;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `value`, `created_at`, `updated_at`) VALUES
+(1, 'email_host', 'smtp.mailgun.org', '2015-07-30 07:58:30', '2015-07-30 07:58:30'),
+(2, 'email_port', '587', '2015-07-30 07:58:30', '2015-07-30 07:58:30'),
+(3, 'email_username', 'postmaster@sandboxad0ae2e211bd4152821b6a7f245cb045.mailgun.org', '2015-07-30 07:58:30', '2015-07-30 07:58:30'),
+(4, 'email_password', 'Oct-1991', '2015-07-30 07:58:30', '2015-07-30 07:58:30'),
+(5, 'email_encryption', 'tls', '2015-07-30 07:58:30', '2015-07-30 07:58:30'),
+(6, 'from_email', 'mailgun@sandboxad0ae2e211bd4152821b6a7f245cb045.mailgun.org', '2015-07-30 07:58:31', '2015-07-30 07:58:31'),
+(7, 'email_content_email_verification', 'Hello [username] , to verify your email address please click on the below link [verification_no] .\nTo visit our website pls click [site_link]\n', '2015-07-30 08:00:21', '2015-07-30 08:22:00'),
+(8, 'email_subject_email_verification', 'Verify your Email address', '2015-07-30 08:00:21', '2015-07-30 08:00:21'),
+(9, 'email_content_ticket_sold', 'tickets  sold', '2015-07-30 09:53:47', '2015-07-30 09:53:47'),
+(10, 'email_subject_ticket_sold', 'tickets ', '2015-07-30 09:53:47', '2015-07-30 09:53:47'),
+(11, 'email_content_buy_ticket', 'tikcet bought', '2015-07-30 09:59:58', '2015-07-30 09:59:58'),
+(12, 'email_subject_buy_ticket', 'ticket buy', '2015-07-30 09:59:58', '2015-07-30 09:59:58'),
+(13, 'email_content_disable_user', 'disable email', '2015-07-30 10:02:48', '2015-07-30 10:02:48'),
+(14, 'email_subject_disable_user', 'disable email', '2015-07-30 10:02:48', '2015-07-30 10:02:48'),
+(15, 'email_content_forgot_password', 'forgot password\r\n\r\nusername :  [username] \r\n\r\nsitelink:[site_link]\r\n\r\npasswordlink: [password_link]\r\n', '2015-07-30 10:03:15', '2015-07-30 10:05:35'),
+(16, 'email_subject_forgot_password', 'forgot password', '2015-07-30 10:03:15', '2015-07-30 10:03:15'),
+(17, 'email_content_enable_user', 'disable event', '2015-07-30 10:03:35', '2015-07-30 10:03:35'),
+(18, 'email_subject_enable_user', 'enable event', '2015-07-30 10:03:36', '2015-07-30 10:03:36'),
+(19, 'email_content_disable_event', 'disable event email', '2015-07-30 10:04:07', '2015-07-30 10:04:07'),
+(20, 'email_subject_disable_event', 'disable event email', '2015-07-30 10:04:07', '2015-07-30 10:04:07'),
+(21, 'email_content_enable_event', 'enable event email', '2015-07-30 10:04:30', '2015-07-30 10:04:30'),
+(22, 'email_subject_enable_event', 'enable event email', '2015-07-30 10:04:30', '2015-07-30 10:04:30'),
+(23, 'email_content_admin_payout', 'Admin Payout ', '2015-07-30 10:06:08', '2015-07-30 10:06:08'),
+(24, 'email_subject_admin_payout', 'Admin Payout', '2015-07-30 10:06:08', '2015-07-30 10:06:08'),
+(25, 'email_content_contact_organizer', 'username: [username] \nuser_email: [user_email] \norganizername: [user_email] \nmessage: [message]\nsite_link: [site_link] \n', '2015-07-30 10:07:59', '2015-07-30 10:07:59'),
+(26, 'email_subject_contact_organizer', 'contact organizer', '2015-07-30 10:07:59', '2015-07-30 10:07:59'),
+(27, 'cancelticketemailsubject', '', '2015-07-30 18:21:45', '2015-07-30 18:42:40'),
+(28, 'cancelticketmail', 'Ticket Cancel', '2015-07-30 18:24:00', '2015-07-30 18:24:00'),
+(29, 'cancelticketemail', 'username :[username]\nbookingid :[bookingid]\nrefundamount : [refundamount]\ntransactiontype: [transactiontype]', '2015-07-30 18:35:28', '2015-07-30 18:42:40'),
+(30, 'canceleventemail', 'hello vishnu\n\nusername : [username]\neventname: [eventname]', '2015-07-30 18:41:38', '2015-07-30 18:41:38'),
+(31, 'canceleventemailsubject', 'event cancel', '2015-07-30 18:41:38', '2015-07-30 18:41:38'),
+(32, 'createeventemail', 'username :[username]\neventname:[eventname]\nstartdate: [startdate]\nstarttime: [starttime]\nenddate: [enddate]\nendtime: [endtime]', '2015-07-30 18:44:27', '2015-07-30 18:44:27'),
+(33, 'createeventemailsubject', 'Create Event', '2015-07-30 18:44:27', '2015-07-30 18:44:27'),
+(34, 'email_content_create_event', 'username :[username]\neventname:[eventname]\nstartdate: [startdate]\nstarttime: [starttime]\nenddate: [enddate]\nendtime: [endtime]', '2015-07-30 18:50:46', '2015-07-30 18:50:46'),
+(35, 'email_subject_create_event', 'CreateEvent', '2015-07-30 18:50:46', '2015-07-30 18:50:46'),
+(36, 'email_content_cancel_event', 'hello vishnu\r\n\r\nusername : [username]\r\neventname: [eventname]', '2015-07-30 18:51:11', '2015-07-30 18:51:11'),
+(37, 'email_subject_cancel_eventt', 'Cancel Event', '2015-07-30 18:51:11', '2015-07-30 18:51:11'),
+(38, 'email_content_cancel_ticket', 'username :[username]\r\nbookingid :[bookingid]\r\nrefundamount : [refundamount]\r\ntransactiontype: [transactiontype]', '2015-07-30 18:51:33', '2015-07-30 18:51:33'),
+(39, 'email_subject_cancel_ticket', 'Ticket Cancel', '2015-07-30 18:51:33', '2015-07-30 18:51:33'),
+(40, 'email_subject_cancel_event', 'event cancel', '2015-07-30 19:06:05', '2015-07-30 19:06:05'),
+(41, 'form_first_name', 'Vishnu', '2015-07-31 10:52:23', '2015-07-31 14:09:45'),
+(42, 'form_last_name', 'Surendran', '2015-07-31 10:52:23', '2015-07-31 10:52:23'),
+(43, 'form_email', 'vishnu.ns@provenlogic.net', '2015-07-31 10:54:52', '2015-07-31 10:54:52'),
+(44, 'form_address', '#32/1, Seshadri Road, Anandrao Circle Gandhi Nagar Bengaluru, Karnataka', '2015-07-31 10:54:52', '2015-08-01 05:31:12'),
+(45, 'form_contact_no', '9877877890', '2015-07-31 10:54:52', '2015-08-06 03:51:11'),
+(46, 'form_tickets', '18,3;21,5', '2015-07-31 10:54:52', '2015-08-06 03:51:11'),
+(47, 'form_event_id', '11', '2015-07-31 10:56:56', '2015-08-06 02:10:46'),
+(48, 'form_ticket_type', '0', '2015-07-31 13:07:16', '2015-07-31 13:11:46'),
+(49, 'form_ticket_id', '65', '2015-07-31 13:41:28', '2015-07-31 13:41:28'),
+(50, 'paypalusername', 'aravinth1991@gmail.com', '2015-08-01 01:20:26', '2015-08-01 10:25:02'),
+(51, 'logo', 'jazhocynlogo-edited.png', '2015-08-03 03:43:05', '2015-08-03 03:43:05');
 
 -- --------------------------------------------------------
 
@@ -297,17 +323,7 @@ CREATE TABLE IF NOT EXISTS `ticket_types` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `ticket_types`
---
-
-INSERT INTO `ticket_types` (`id`, `event_id`, `type`, `price`, `fees_show`, `fees_actual`, `booking_fees`, `payment_fees`, `fees_type`, `total_price`, `currency`, `title`, `description`, `noseats`, `start_time`, `endtime`, `created_at`, `updated_at`) VALUES
-(1, 9, 0, 0, 0.00, 0.00, 0.00, 0.00, 0, 0.00, '', 'A/C', '', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-07-06 03:43:30', '2015-07-06 03:43:30'),
-(2, 12, 0, 0, 0.00, 0.00, 0.00, 0.00, 0, 0.00, '', 'A/C', '', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-07-06 03:50:20', '2015-07-06 03:50:20'),
-(3, 13, 0, 0, 0.00, 0.00, 0.00, 0.00, 0, 0.00, '', 'A/C', '', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-07-06 03:58:55', '2015-07-06 03:58:55'),
-(4, 14, 0, 0, 0.00, 0.00, 0.00, 0.00, 0, 0.00, '', 'General', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-07-06 05:24:55', '2015-07-06 05:24:55');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -331,6 +347,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `status` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `is_cancelled` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -359,14 +376,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `email`, `gender`, `dob`, `password`, `first_name`, `last_name`, `city`, `address`, `phone`, `role`, `verified`, `verification_no`, `facebook_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'preethi@provenlogic.net', 'female', '0000-00-00', '$2y$10$iMFybcF0jqmp1ujwiH.gJ.44yXgmsbUi.kgzNSOHBGiINp5UgCE8m', '', '', '', '', '', 0, 1, '', 0, 'w4jAofiRKB6IrS0bwTPUeIlEePPuLhuKV0D29r882DobzZGRoMOgvpBoe1nc', '2015-06-26 04:26:48', '2015-07-06 02:39:16');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

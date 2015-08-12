@@ -1013,36 +1013,18 @@ public function postTicketcancel()
 {
 	$transaction_id= Input::get('transaction_id');
 	$transactions=Transaction::find($transaction_id);
-	$count_tkt=0;
 	if($transactions!=NULL and $transactions->is_cancelled==0)
 	{
-	$count_tkt=Ticket::where('transaction_id',$transaction_id)->count();
-	$ticket=Ticket::where('transaction_id',$transaction_id)->first();
-	$ticket_type=$ticket->tickettype_id;
-	$check_ticket_count = TicketType::where('id',$ticket_type)->first();
-	$per_ticket_amt=$check_ticket_count ->price;
-	$refund_amount=0;
-	$tkt_type=$check_ticket_count ->type;
-	//return $tkt_type;
-	if( $tkt_type == 0 ) {
+	$refund_amount=$transactions->amount;
+
+	Ticket::where('transaction_id',$transaction_id)->delete();
+	$transactions->is_cancelled=1;
+	$transactions->save();
+	$response_array = array('success' => true,'refund amount'=>$refund_amount);
+	$response_code = 200;
+	return Response::json($response_array,$response_code);
 		
-			Ticket::where('transaction_id',$transaction_id)->delete();
-			$transactions->is_cancelled=1;
-			$transactions->save();
-			$response_array = array('success' => true,'refund amount'=>$refund_amount);
-			$response_code = 200;
-			return Response::json($response_array,$response_code);
-		}
-	else
-	{
-		 Ticket::where('transaction_id',$transaction_id)->delete();
-		 $transactions->is_cancelled=1;
-		 $transactions->save();
-		 $refund_amount=$per_ticket_amt*$count_tkt;
-		 $response_array = array('success' => true,'refund amount'=>$refund_amount);
-		 $response_code = 200;
-		 return Response::json($response_array,$response_code);
-	}
+
    }else{
    	     
 		 $response_array = array('success' => false,'error_message'=>'Not valid transaction or a already cancelled transaction');

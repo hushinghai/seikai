@@ -659,42 +659,20 @@ class UserController extends BaseController {
     		$count_tkt=0;
     		if($transactions!=NULL and $transactions->is_cancelled==0)
     		{
-    		$count_tkt=Ticket::where('transaction_id',$transaction_id)->count();
-    		$ticket=Ticket::where('transaction_id',$transaction_id)->first();
-    		$event=EventB::where('id',$ticket->event_id)->first();
-    		$ticket_type=$ticket->tickettype_id;
-    		$check_ticket_count = TicketType::where('id',$ticket_type)->first();
-    		$per_ticket_amt=$check_ticket_count ->price;
-    		$refund_amount=0;
-    		$tkt_type=$check_ticket_count ->type;
+    		$refund_amount=$transactions->amount;
     		$admi = Admin::get();
 			$adarray = array();
 			foreach ($admi as $key) {
 				$adarray[] = $key->username;
 			}
-    		//return $adarray;
-    		if( $tkt_type == 0 ) {
     			
-    				Ticket::where('transaction_id',$transaction_id)->delete();
-    				$transactions->is_cancelled=1;
-    				$transactions->save();
-    				Event::fire('user.cancelticket', array($user,$transactions));
-    				Event::fire('admin.cancelticket', array($user,$transactions,$adarray));
-    				return Redirect::to('user/mytickets/' . Auth::user()->id);
-
-    				
-    			}
-    		else
-    		{
-    			 Ticket::where('transaction_id',$transaction_id)->delete();
-    			 $transactions->is_cancelled=1;
-    			 $transactions->save();
-    			 $refund_amount=$per_ticket_amt*$count_tkt;
-    			 Event::fire('user.cancelticket', array($user,$transactions));
-    			 Event::fire('admin.cancelticket', array($user,$transactions,$adarray));
-   	  			 return Redirect::to('user/mytickets/' . Auth::user()->id);
-    			}
-		    			 
+    		Ticket::where('transaction_id',$transaction_id)->delete();
+    		$transactions->is_cancelled=1;
+    		$transactions->save();
+    		Event::fire('user.cancelticket', array($user,$transactions));
+    		Event::fire('admin.cancelticket', array($user,$transactions,$adarray));
+    		return Redirect::to('user/mytickets/' . Auth::user()->id);
+ 			 
     		
     	   }else{
     			 return Redirect::to('user/mytickets/' . Auth::user()->id);  

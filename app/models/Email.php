@@ -53,14 +53,18 @@ public static function make($content, $kv = array())
 
 }
 
-public static function send($emailid,$subject, $content)
+public static function send($emailid,$subject,$content)
 {
 
     $vars['body'] = $content;
+    if(is_array($emailid))
+    {
 
+        foreach($emailid as $email)
+         {
     $validator= Validator::make(
         array(
-            'emailid' => $emailid),
+            'emailid' => $email),
         array(
             'emailid' => 'required|email')
         );
@@ -72,11 +76,21 @@ public static function send($emailid,$subject, $content)
     else
     {
 
+    Mail::send('user.email', $vars, function($message) use ($email,$subject)
+    {
+      $message->to($email, s('title'))->subject( $subject);
+    });
+  }
+}
+
+}
+else
+{
     Mail::send('user.email', $vars, function($message) use ($emailid,$subject)
     {
       $message->to($emailid, s('title'))->subject( $subject);
     });
-  }
+}
 }
 
 
