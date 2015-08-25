@@ -333,11 +333,12 @@ font-weight: 300;
                     <div class="g-cell g-cell-1-1">
                       <label class="responsive-form__label--primary">Organizer name</label>
                     </div>
+                      <label id="organizerName" style="padding-left:20px" >{{ $org_name }}</label>
                       <span class="add-edit g-cell g-cell-1-1"><a class="edit" id="editOrganizer" onclick='showcancel()'>Edit this organizer</a></span>
                       <span id="cancel_show" class="cancel-edit g-cell g-cell-1-1" style="display:none"><a class="cancel" id="canceleditOrganizer">Cancel</a></span>
                    <div>
 
-                   <label id="organizerName" style="padding-left:20px" >{{ $org_name }}</label>
+                   
                    
                    <div id="editOrg" style="display:none;padding-left:20px">
                      <input class="l-block-1"  id="org_name" name="org_name" placeholder="Who's organizing this event?" type="text" value="{{ $org_name }}">
