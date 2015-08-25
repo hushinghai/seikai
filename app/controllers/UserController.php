@@ -225,25 +225,27 @@ class UserController extends BaseController {
 					'picture' => 'required|mimes:jpeg,bmp,png,jpg',
 				)
 		);
-		if (Input::hasFile('file'))
-        {
-			if ($validator_image->fails()) {
+		
+		if ($validator_image->fails()) {
 				$error_messages = $validator_image->messages()->all();
 				$type='failed';
 	         	$message='Please select Correct Image type';
 	            return Redirect::to('user/createevent')->with('message',$message)->with('type',$type);
-			}else
-			{
-	           $filename = $image->getClientOriginalName();
-	       	   $filename = pathinfo($filename, PATHINFO_FILENAME);
-	           $fullname = Str::slug(Str::random(8) . $filename) . '.' .$image->getClientOriginalExtension();
-	           $upload   = $image->move('uploads/event_logos', $fullname);
-			}
 		}else
 		{
-	        $fullname = "";	
-	    
-		}	 
+			if (Input::hasFile('file'))
+			{
+			   $filename = $image->getClientOriginalName();
+				   $filename = pathinfo($filename, PATHINFO_FILENAME);
+			   $fullname = Str::slug(Str::random(8) . $filename) . '.' .$image->getClientOriginalExtension();
+			   $upload   = $image->move('uploads/event_logos', $fullname);
+			}
+			else
+			{
+			$fullname = "";	
+			}	
+		}
+		 
 
 		$vars['name'] = $input['name'];
 
