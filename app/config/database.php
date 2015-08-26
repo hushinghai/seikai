@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'evenbolt2',
+			'database'  => 'eventbolt',
 			'username'  => 'root',
 			'password'  => 'password',
 			'charset'   => 'utf8',
