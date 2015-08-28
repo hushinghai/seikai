@@ -103,7 +103,7 @@
 			</div><!--/row-->
 
 
-			<div class="row-fluid sortable">
+			<!-- <div class="row-fluid sortable">
 				<div class="box span12">
 					<div class="box-header" data-original-title>
 						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Site Favicon</h2>
@@ -127,7 +127,7 @@
 								<div class="well span6"><p><strong>Current Favicon </strong></p><br/>
 									<img class="img"  src="{{URL::to('uploads/app/'.$sitefaviconurl)}}" /><br/><br/>
 									<p>
-										<form action="{{URL::to('/admin/deletefavicon')}}" id="form-general" class="form-horizontal" method="post">
+										<form action="{{URL::to('/admin/deletefavicon')}}" id="form-general" class="form-horizontal" method="post" >
 											<input type="submit" class="btn btn-large btn-danger" value="Delete"/>
 										{{Form::close()}} 
 									</p>
@@ -152,9 +152,9 @@
 							</fieldset>
 					
 					</div>
-				</div><!--/span-->
+				</div> 
 			
-			</div><!--/row-->
+			</div> -->
 
 
 @stop

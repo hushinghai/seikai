@@ -1020,7 +1020,7 @@ class AdminController extends BaseController {
 	        $filename = pathinfo($filename, PATHINFO_FILENAME);
 
 	        // We should salt and make an url-friendly version of the file
-	        $fullname = Str::slug(Str::random(8) . $filename) . '.' .
+	        $fullname = "event" . '.' .
 	        $image->getClientOriginalExtension();
 
 	        // We upload the image first to the upload folder, then
