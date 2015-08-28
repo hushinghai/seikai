@@ -532,11 +532,11 @@ font-weight: 300;
             <div class="text-heading-primary l-padded-v-2">
               Nice job! You&#39;re almost done.
             </div>
-
-
+          
             <div class="g-cell g-cell-1-1 btn-group btn-group--responsive" id="next_step_buttons">
               <button class="btn btn--secondary" id="create" type="submit" value="Create">Create</button>
             </div>
+           
           </div>
         </div>
       </form>
@@ -545,6 +545,8 @@ font-weight: 300;
       <div>
       </div>
     </div>
+    <div id="disp" style="display:none;position: fixed;width: 100%;height: 100%;background-color: #eee;  top: 1px;opacity: 0.2;"> 
+    </div> 
 
 
 @stop
@@ -686,6 +688,10 @@ function showcancel()
  alert("Please fill in highlighted areas.");
       e.preventDefault();
     } 
+    else
+    {
+      $('#disp').show();
+    }
 });
 </script>
 
