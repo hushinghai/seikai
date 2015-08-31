@@ -56,6 +56,8 @@ Route::filter('only_admin', function()
 	if (!AdminAuth::admin()) return Redirect::to('/admin/login');
 });
 
+ 
+
 Route::filter('admin_loggedIn', function()
 {
 	
@@ -70,16 +72,23 @@ Route::group(array('before' => array('installed','admin_loggedIn')), function()
 	Route::get('/admin/login',"AdminController@loginadmin");
 	Route::post('/admin/login',"AdminController@login");
 
+	 
 }); 
 
+ 
+ 
 
 Route::group(array('before' => array('installed','only_admin')), function()
 {  
 
-Route::controller('admin','AdminController');
+ Route::controller('admin','AdminController');
 
+});
 
-}); 
+ 
+
+// Route::get('adminl', function() {
+// 	return Redirect::to('/admin/login'); });
 
 App::missing(function($exception)
 {
@@ -113,6 +122,7 @@ Route::group(array('before' => array('installed')), function(){
 	Route::post('login','LoginController@loginPost');
 	Route::get('login','LoginController@login');
 	Route::get('logout','LoginController@logout');
+   
 
 	Route::post('forgotpassword','LoginController@postForgotpassword');
 	Route::post('resetpassword','LoginController@postResetpassword');
@@ -120,9 +130,9 @@ Route::group(array('before' => array('installed')), function(){
 	Route::get('resetpassword','LoginController@getResetpassword');
 	Route::get('verifyuser','LoginController@verifyuser');
 	Route::get('/', "EventsController@events");
+	
 
 });
-
 
 
 

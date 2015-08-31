@@ -122,6 +122,10 @@ class EventsController extends BaseController {
 		if($event != NULL)
 		{
 		$event_date=$event->start_date;
+
+		$event_start_date=$event->start_date;
+		$event_end_date=$event->end_date;
+
 		$crrdate = date('Y-m-d', strtotime($date));
    		$crrtime = date('H:i:s', strtotime($date));
    		$mv=substr($event->start_time,-2);
@@ -249,8 +253,28 @@ class EventsController extends BaseController {
 			$vars['event'] = $event_obj;
 
 			$vars['flag']=$flag;
+			$organizer_details=$event->user_created;
+			$vars['organizer_id']=$organizer_details;
+			$organizer_info=User::where('id',$organizer_details)->first();
+			$organizer_name=$organizer_info->first_name.''.$organizer_info->last_name;
+			$organizer_email=$organizer_info->email;
+			$vars['organizer_name']=$organizer_name;
+			$vars['organizer_email']=$organizer_email;
+			
+
+			$event_start_date=$event->start_date;
+			$event_end_date=$event->end_date;
+			$d_start_date = date("F j, Y",strtotime($event_start_date));
+			$d_end_date = date("F j, Y",strtotime($event_end_date));
+
+			$vars['start_date']=$d_start_date;
+			$vars['end_date']=$d_end_date;
+			 
+
 		}
 		//dd($vars['tickettypes'][0]->type);
+		
+
 		return View::make('event.eventdetails',$vars);
 	  }
 	  else

@@ -18,6 +18,12 @@
 	<link id="base-style" href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 	<link id="base-style-responsive" href="{{ asset('admin/css/style-responsive.css') }}" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('uploads/app/apple-touch-icon-144-precomposed.png')}}">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('uploads/app/apple-touch-icon-114-precomposed.png')}}">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('uploads/app/apple-touch-icon-72-precomposed.png')}}">
+  <link rel="apple-touch-icon-precomposed" href="{{asset('uploads/app/apple-touch-icon-57-precomposed.png')}}">
+  <link rel="shortcut icon" href="{{asset('uploads/app/favicon.png')}}">
+  <link rel="shortcut icon" href="{{asset('uploads/app/favicon.ico')}}">
 	
 	@yield('css')
 	<!-- end: CSS -->

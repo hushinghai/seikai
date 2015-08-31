@@ -54,7 +54,7 @@ class LoginController extends BaseController {
 	}
 
 	public function  login(){
-
+ 
 		$vars['pageTitle']=s('title');
 
 		if(Input::has('view') && Input::get('view') == 'user-signin') {
@@ -64,6 +64,12 @@ class LoginController extends BaseController {
 		}
 
 		return View::make("user/login",$vars);
+	}
+
+	public function admin(){
+
+		return View::make('admin.login');
+	
 	}
 
 	public function loginPost()

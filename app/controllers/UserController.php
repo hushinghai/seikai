@@ -26,6 +26,11 @@ class UserController extends BaseController {
 		return View::make('event.createevent',$vars);
 	}
 
+   public function getIndex() {
+ 		
+  
+	}
+
 	public function getEditevent($event_id) {
 
 		$vars['pageTitle'] = 'Edit Event';

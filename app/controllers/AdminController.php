@@ -17,12 +17,29 @@ class AdminController extends BaseController {
 	|
 	*/
 
+	 
+
+
+	public function getIndex() {
+		 
+ 		return View::make('admin.login');
+	}
+
+
 	public function loginadmin(){
 	
 	
 		return View::make('admin.login');
 	
 	}
+
+	 
+	// public function admin(){
+	
+	
+	// 	return View::make('admin.login');
+	
+	// }
 
 	public function login(){
 	
@@ -131,13 +148,7 @@ class AdminController extends BaseController {
 		
 	}
 
-	public function getIndex() {
-
-		$vars['page'] = 'Dashboard';
-
-		return View::make('admin/pageshell',$vars);
-	}
-
+	
 	public function get_users() {
 		
 		$vars['page'] = "User Management";

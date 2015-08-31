@@ -102,7 +102,6 @@ margin-top: 5%;
     margin-bottom: 26px;
     text-align: center;
     position:relative;
-    z-index:10;
 }
 #track_event {
     display: inline-block;
@@ -385,7 +384,7 @@ text-align: center;
   </div>
 
   <div class="panel_628" id="registerationCompleted" style="display:none">
-  	<div style="background-color:white;padding:50px">
+    <div style="background-color:white;padding:50px">
       <div style="background-color:white">You are going to Event</div>
       <br/><br/>
       You will receive a mail shortly with ticket details
@@ -434,17 +433,17 @@ text-align: center;
 
                 <div class="g-cell g-cell-12-12 l-block-2">
                     <label for="contact_email" class="responsive-form__label--primary">
-                        Email Address
+                        Your Email Address
                     </label>
                 </div>
 
                 <div class="g-cell g-cell-12-12 g-cell-lg-12-12">
-                    <input type="text" id="contact_email" name="contact_email" @if(Auth::user()) value="{{Auth::user()->email}}" @endif/>
+                    <input type="text" id="contact_email" name="contact_email" disabled="true" @if(Auth::user()) value="{{Auth::user()->email}}" @endif/>
                 </div>
 
                 <div class="g-cell g-cell-12-12 l-block-2">
                     <label for="contact_message" class="responsive-form__label--primary">
-                        Message
+                        Your Message
                     </label>
                 </div>
 
@@ -514,7 +513,7 @@ text-align: center;
                     <td>
                            @if(Auth::user())
                             <div id="loggedInAs" style="">
-	                         
+                           
                               <font style="font-size: 14px">Hi, <span id="loggedInEmail" style="font-style: italic;">{{Auth::user()->email}}.</span>&nbsp;&nbsp;&nbsp;</font>
                               <font style="font-size: 12px; font-weight: normal;">Not you? <a href="{{URL::to('logout')}}">Sign Out</a></font>
                             </div>
@@ -671,10 +670,10 @@ text-align: center;
 
                   <h2>
 
-                    From {{$event->d_start_date}} {{$event->startTime}} to 
+                    From {{$start_date}} {{$event->startTime}} to 
 
                     @if($event->startDate != $event->endDate) 
-                      {{$event->d_end_date}} 
+                      {{$end_date}} 
                     @endif  
                   
                     {{$event->endTime}}
@@ -757,7 +756,7 @@ target="_top">
                       <td class="fee_td" nowrap="nowrap">{{$tickettype->fees}}</td>
                       <td nowrap="nowrap">N/A</td>
                     @else  
-                      <td nowrap="nowrap">{{$tickettype->d_end_date}}</td>
+                      <td nowrap="nowrap">{{$end_date}}</td>
                       <td class="price_td" nowrap="nowrap"><input name="cost_32484745_None" type="hidden" value="0.00">{{$tickettype->dprice}}</td>
 
                       <td class="fee_td" nowrap="nowrap">{{$tickettype->fees}}</td>
@@ -823,13 +822,12 @@ target="_top">
           <div class="panel_section">
             {{$event->details}}
             @if(Auth::user())
-
-            <div class="l-block-2">
-                                
-
-                <button type="button" ><a href="{{URL::to('user/eventcancel/' . $event->id)}}" style="text-decoration: none !important ; color:#050606">Cancel Event</a> </button>
-                            </div> 
-                            @endif
+                   @if(Auth::user()->id == $organizer_id)
+                      <div class="l-block-2">
+                      <button type="button" ><a href="{{URL::to('user/eventcancel/' . $event->id)}}" style="text-decoration: none !important ; color:#050606">Cancel Event</a> </button>
+                      </div> 
+                   @endif
+            @endif
    
                             
 
@@ -837,17 +835,18 @@ target="_top">
 
           <!-- end panel_body -->
 
-          @if($event->organizer['profile'] == 1 && $event->organizer['disabled'] == 'false')
+         @if(Auth::user())
+                   @if(Auth::user()->id != $organizer_id)
             <div class="panel_body">
-              Have questions about {{$event->organizer['name']}} Questions? 
+              Have questions about {{$event->title}} Event? 
               <a class="contact_organizer_link js-d-modal contactOrg">
-              Contact {{$event->organizer['name']}}</a>
+              Contact Event Organizer {{$organizer_name}}</a>
             </div>
           @else
              <div class="panel_body"> 
              </div> 
           @endif
-
+          @endif
           
         </div>
         <!-- end panel_628 -->
@@ -893,10 +892,10 @@ target="_top">
             </h2>
 
 
-            <h2 style="padding-bottom: 0;"><span class="dtstart">From {$event->d_start_date}} {{$event->startTime}} to 
+            <h2 style="padding-bottom: 0;"><span class="dtstart">From {{$start_date}} {{$event->startTime}} to 
 
                     @if($event->startDate != $event->endDate) 
-                      {{$event->d_end_date}} 
+                      {{$end_date}} 
                     @endif  
                   
                     {{$event->endTime}}</span>
@@ -933,7 +932,10 @@ target="_top">
 
               @endif  
             </div>
-            @if($event->organizer['disabled'] == 'false')
+
+            
+         @if(Auth::user())
+            @if(Auth::user()->id != $organizer_id)
             <span class="button_css"><a class="contact_organizer_link js-d-modal contactOrg"><span class="icon contact_host_icon ">&nbsp;</span> Contact the Organizer</a></span>
 
             <div id="organizer_content">
@@ -952,10 +954,12 @@ target="_top">
                 <a class="url" href="http://www.facebook.com/ .{{$event->organizer['fb_link']}}" rel="nofollow" target="_blank">facebook.com/{{$event->organizer['fb_link']}}</a>
               </div>
               @endif
+              
               @endif
             </div>
             <!-- end organizer_context -->
             @endif
+         @endif
 
             
           </div>
@@ -1057,7 +1061,7 @@ $('#send_msg').click(function(e) {
 
 
 $('#completeRegisteration').click(function(e) {
-	//$('#registerPopUp').trigger('close');
+  //$('#registerPopUp').trigger('close');
 
   e.preventDefault();
 
@@ -1075,8 +1079,8 @@ $('#completeRegisteration').click(function(e) {
     total = ( parseFloat($(e).val()) * quantity ) + total;
     
     if(parseFloat(quantity) > 0){
-	    
-	    tickets[ti] = parseFloat(quantity);
+      
+      tickets[ti] = parseFloat(quantity);
     }
 
   });
@@ -1084,63 +1088,63 @@ $('#completeRegisteration').click(function(e) {
   $("#total_cost").val(total);
   
     var data = {};
-	  data['first_name'] = $("#first_name").val();
-	  data['last_name'] = $("#last_name").val();
-	  data['email'] = $("#email_address").val();
-	  data['address'] = $("#address").val();
-	  data['contact_no'] = $("#contact_no").val();
+    data['first_name'] = $("#first_name").val();
+    data['last_name'] = $("#last_name").val();
+    data['email'] = $("#email_address").val();
+    data['address'] = $("#address").val();
+    data['contact_no'] = $("#contact_no").val();
     data['ticket_id'] = $("#ticket_id").val();
-	  data['tickets'] = tickets;
+    data['tickets'] = tickets;
     //alert(JSON.stringify(tickets));
-	  data['event_id'] = {{ $event->id }};
+    data['event_id'] = {{ $event->id }};
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
     $.post('{{ URL::to("/tickets/addticketdetails") }}', data, function(){  
       
     });
 
-if($("#first_name").val() && $("#last_name").val() && $("#email_address").val() &&  re.test($("#email_address").val()) && /^[a-zA-Z ]+$/.test( $("#last_name").val()) && /^[a-zA-Z ]+$/.test( $("#first_name").val()) && /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test($("#contact_no").val()) && $("#address").val() && $("#contact_no").val())	
+if($("#first_name").val() && $("#last_name").val() && $("#email_address").val() &&  re.test($("#email_address").val()) && /^[a-zA-Z ]+$/.test( $("#last_name").val()) && /^[a-zA-Z ]+$/.test( $("#first_name").val()) && /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test($("#contact_no").val()) && $("#address").val() && $("#contact_no").val())  
 {
 
 
 
   if(total == 0){
-	  
-	  
-	    $.post('{{ URL::to("/tickets/buyfreetickets") }}', data, function(){
-		 $('#registerPopUp').trigger('close');
-		 	$('#registerationCompleted').lightbox_me({
+    
+    
+      $.post('{{ URL::to("/tickets/buyfreetickets") }}', data, function(){
+     $('#registerPopUp').trigger('close');
+      $('#registerationCompleted').lightbox_me({
         centered: true, 
         onLoad: function() { 
             $('#registerationCompleted').find('input:first').focus()
             }
         });
-		  
-	  });
-	  
+      
+    });
+    
     
   }
   else{ 
-	  
+    
 
-	  
-	  // $.post('{{ URL::to("/tickets/buytickets") }}', data, function(){
-		 
-		 // 	$("#registrationForm").submit();
-		  
-	  // });
-	  //$('#completeRegisteration').hide();
+    
+    // $.post('{{ URL::to("/tickets/buytickets") }}', data, function(){
+     
+     //   $("#registrationForm").submit();
+      
+    // });
+    //$('#completeRegisteration').hide();
     $("#registrationForm").submit();
-	  
+    
   
 
 }
 
 }
 else{
-	
-	alert("All Fields Are Required & Valid");
-	}
+  
+  alert("All Fields Are Required & Valid");
+  }
   /*
     $('#registerationCompleted').lightbox_me({
         centered: true, 
