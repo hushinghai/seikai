@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return array(
 
@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'eventbolt',
+			'database'  => 'c9',
 			'username'  => 'root',
-			'password'  => 'password',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
